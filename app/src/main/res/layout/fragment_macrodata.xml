@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="view.MacroDataFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/macroInputs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:id="@+id/macroScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="110dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/populationImg"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/population_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/populationTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Population:"
+                        android:textSize="19sp"
+                        app:layout_constraintStart_toEndOf="@+id/populationImg"
+                        app:layout_constraintTop_toTopOf="@+id/populationImg" />
+
+
+                    <Button
+                        android:id="@+id/populationAbsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Absolute scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/populationImg"
+                        app:layout_constraintStart_toStartOf="@+id/populationTitle" />
+
+                    <Button
+                        android:id="@+id/populationRelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Relative scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/populationImg"
+                        app:layout_constraintStart_toEndOf="@+id/populationAbsBtn" />
+
+
+
+                    <ImageView
+                        android:id="@+id/gdpImg"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/gdp_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/populationImg" />
+
+                    <TextView
+                        android:id="@+id/gdpTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="National GDP:"
+                        android:textSize="19sp"
+                        app:layout_constraintStart_toEndOf="@+id/gdpImg"
+                        app:layout_constraintTop_toTopOf="@+id/gdpImg" />
+
+                    <Button
+                        android:id="@+id/gdpAbsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Absolute scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/gdpImg"
+                        app:layout_constraintStart_toStartOf="@+id/gdpTitle" />
+
+                    <Button
+                        android:id="@+id/gdpRelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Relative scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/gdpImg"
+                        app:layout_constraintStart_toEndOf="@+id/gdpAbsBtn" />
+
+
+                    <ImageView
+                        android:id="@+id/govSpendingImg"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/govspending_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/gdpImg" />
+
+                    <TextView
+                        android:id="@+id/govSpendingTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Government Expenditure:"
+                        android:textSize="19sp"
+                        app:layout_constraintStart_toEndOf="@+id/govSpendingImg"
+                        app:layout_constraintTop_toTopOf="@+id/govSpendingImg" />
+
+                    <Button
+                        android:id="@+id/govSpendingAbsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Absolute scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/govSpendingImg"
+                        app:layout_constraintStart_toStartOf="@+id/govSpendingTitle" />
+
+                    <Button
+                        android:id="@+id/govSpendingRelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Relative scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/govSpendingImg"
+                        app:layout_constraintStart_toEndOf="@+id/govSpendingAbsBtn" />
+
+
+                    <ImageView
+                        android:id="@+id/debtImg"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/debt_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/govSpendingImg" />
+
+                    <TextView
+                        android:id="@+id/debtTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="National Debt:"
+                        android:textSize="19sp"
+                        app:layout_constraintStart_toEndOf="@+id/debtImg"
+                        app:layout_constraintTop_toTopOf="@+id/debtImg" />
+
+                    <Button
+                        android:id="@+id/debtAbsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Absolute scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/debtImg"
+                        app:layout_constraintStart_toStartOf="@+id/debtTitle" />
+
+                    <Button
+                        android:id="@+id/debtRelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Relative scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/debtImg"
+                        app:layout_constraintStart_toEndOf="@+id/debtAbsBtn" />
+
+
+
+                    <ImageView
+                        android:id="@+id/unemploymentImg"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/unemployment_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/debtImg" />
+
+                    <TextView
+                        android:id="@+id/unemploymentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Unemployment Rate:"
+                        android:textSize="19sp"
+                        app:layout_constraintStart_toEndOf="@+id/unemploymentImg"
+                        app:layout_constraintTop_toTopOf="@+id/unemploymentImg" />
+
+                    <Button
+                        android:id="@+id/unemploymentAbsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Absolute scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/unemploymentImg"
+                        app:layout_constraintStart_toStartOf="@+id/unemploymentTitle" />
+
+                    <Button
+                        android:id="@+id/unemploymentRelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Relative scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/unemploymentImg"
+                        app:layout_constraintStart_toEndOf="@+id/unemploymentAbsBtn" />
+
+                    <ImageView
+                        android:id="@+id/importImg"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/importexport_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/unemploymentImg" />
+
+                    <TextView
+                        android:id="@+id/importTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Import:"
+                        android:textSize="19sp"
+                        app:layout_constraintStart_toEndOf="@+id/importImg"
+                        app:layout_constraintTop_toTopOf="@+id/importImg" />
+
+                    <Button
+                        android:id="@+id/importAbsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Absolute scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/importImg"
+                        app:layout_constraintStart_toStartOf="@+id/importTitle" />
+
+                    <Button
+                        android:id="@+id/importRelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Relative scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/importImg"
+                        app:layout_constraintStart_toEndOf="@+id/importAbsBtn" />
+
+                    <ImageView
+                        android:id="@+id/exportImg"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/importexport_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/importImg" />
+
+                    <TextView
+                        android:id="@+id/exportTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Export:"
+                        android:textSize="19sp"
+                        app:layout_constraintStart_toEndOf="@+id/exportImg"
+                        app:layout_constraintTop_toTopOf="@+id/exportImg" />
+
+                    <Button
+                        android:id="@+id/exportAbsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Absolute scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exportImg"
+                        app:layout_constraintStart_toStartOf="@+id/exportTitle" />
+
+                    <Button
+                        android:id="@+id/exportRelBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Relative scale"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exportImg"
+                        app:layout_constraintStart_toEndOf="@+id/exportAbsBtn" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/countries"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:textSize="19sp"
+                app:layout_constraintBottom_toTopOf="@+id/countryClear"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Spinner
+                android:id="@+id/selectCountries"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/countries"
+                app:layout_constraintTop_toBottomOf="@+id/countries" />
+
+            <Button
+                android:id="@+id/countryClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="Clear Country List"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
