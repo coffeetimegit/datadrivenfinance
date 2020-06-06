@@ -23,6 +23,8 @@ def OPV(S0, K, r, T, option_type):
     def monte_carlo_brownian_motion(S0, K, r, T, option_type):
         S0 = float(S0)
         K = float(K)
+        if '%' in r:
+            r = float(r[:r.index('%')]) / 100
         r = float(r)
         T = float(T)
         print(type(option_type), option_type)
