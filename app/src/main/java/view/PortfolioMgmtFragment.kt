@@ -109,7 +109,7 @@ class PortfolioMgmtFragment : Fragment() {
                 if (portfolio.size < 2) {
                     Toast.makeText(activity, "Error: Select at least 2 stocks from the dropdown!", Toast.LENGTH_SHORT).show()
                 } else if (portfolioSimulation.contains("Set Simulation")) {
-                    Toast.makeText(activity, "Error: Set simulation value!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Error: Set a simulation value!", Toast.LENGTH_SHORT).show()
                 } else {
                     var simulationVal = portfolioSimulation.toString()
                     var mptCache = initMPT(simulationVal)
