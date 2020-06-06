@@ -25,7 +25,8 @@ def OPV(S0, K, r, T, option_type):
         K = float(K)
         if '%' in r:
             r = float(r[:r.index('%')]) / 100
-        r = float(r)
+        else:
+            r = float(r)
         T = float(T)
         print(type(option_type), option_type)
         if option_type == 'Call Option':
