@@ -24,6 +24,7 @@ def MacroData(raw, data_type, abs):
                 temp = []
 
     country = []
+    percentage = False
     if data_type == 'population':
         suffix = '_LP'
     elif data_type == 'gdp':
@@ -36,8 +37,10 @@ def MacroData(raw, data_type, abs):
         suffix = '_LUR'
     elif data_type == 'import':
         suffix = '_TM_RPCH'
+        percentage = True
     elif data_type == 'export':
         suffix = '_TX_RPCH'
+        percentage = True
 
     message = 'Clear country list.'
 
@@ -118,16 +121,28 @@ def MacroData(raw, data_type, abs):
 
         data_relative = data.dropna()
 
+        if percentage:
+            for k in range(len(select)):
+                res = [100]
+                for l in range(1, len(data_relative)):
+                    res.append((1 + data_relative[select[k]][l]/100) * (res[-1]))
 
-        for k in range(len(select)):
-            res = []
-            ind = data_relative[select[k]][0]
-            for l in range(len(data_relative)):
-                res.append(((data_relative[select[k]][l] / ind) - 1) * 100)
-            data_relative[select[k]] = res
-        data_relative.plot(figsize=(10, 10))
-        plt.plot(data_relative)
-        plt.xlabel('Years')
+                data_relative[select[k]] = res
+            data_relative.plot(figsize=(10, 10))
+            plt.plot(data_relative)
+            plt.xlabel('Years')
+
+        else:
+            for k in range(len(select)):
+                res = []
+                ind = data_relative[select[k]][0]
+                for l in range(len(data_relative)):
+                    res.append(((data_relative[select[k]][l] / ind) - 1) * 100)
+                data_relative[select[k]] = res
+            data_relative.plot(figsize=(10, 10))
+            plt.plot(data_relative)
+            plt.xlabel('Years')
+
 
         if data_type == 'population':
             plt.ylabel('Percentage change in Population')
@@ -140,9 +155,9 @@ def MacroData(raw, data_type, abs):
         elif data_type == 'unemployment':
             plt.ylabel('Percentage change in Unemployment Rate')
         elif data_type == 'import':
-            plt.ylabel('Percentage change in Import')
+            plt.ylabel('Cumulative change in Import')
         elif data_type == 'export':
-            plt.ylabel('Percentage change in Export')
+            plt.ylabel('Cumulative change in Export')
 
         dir = os.environ["HOME"] + '/macrograph.png'
         plt.savefig(dir)
