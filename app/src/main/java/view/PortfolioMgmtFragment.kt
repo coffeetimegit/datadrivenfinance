@@ -45,10 +45,10 @@ class PortfolioMgmtFragment : Fragment() {
         lateinit var option: Spinner
         lateinit var result: TextView
 
-        option = view!!.findViewById(R.id.selectStockMpt)
-        result = view!!.findViewById(R.id.mptRes)
+        option = view.findViewById(R.id.selectStockMpt)
+        result = view.findViewById(R.id.mptRes)
 
-        val options = getResources().getStringArray(R.array.SP500List)
+        val options = resources.getStringArray(R.array.SP500List)
 
         option.adapter = ArrayAdapter<String>(activity!!.applicationContext, android.R.layout.simple_list_item_1, options)
 
@@ -75,10 +75,11 @@ class PortfolioMgmtFragment : Fragment() {
 
         lateinit var option1: Spinner
 
-        option1 = view!!.findViewById(R.id.mptSimulation)
+        option1 = view.findViewById(R.id.mptSimulation)
 
 
-        val options1 = getResources().getStringArray(R.array.Simulation)
+        val options1 = resources.getStringArray(R.array.Simulation)
+        var simulate = false
 
         option1.adapter = ArrayAdapter<String>(activity!!.applicationContext, android.R.layout.simple_list_item_1, options1)
 
@@ -93,15 +94,17 @@ class PortfolioMgmtFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
+                simulate = portfolioSimulation.toString() != options1.get(position).toString()
                 portfolioSimulation.clear()
                 portfolioSimulation.add(options1.get(position))
+
             }
 
         }
 
         mptBtn.setOnClickListener {
 
-            if (!mptRes.text.contains("Investment Universe:")) {
+            if (!mptRes.text.contains("Investment Universe:") || simulate) {
 
                 if (portfolio.size < 2) {
                     Toast.makeText(activity, "Error: Select at least 2 stocks from the dropdown!", Toast.LENGTH_SHORT).show()
@@ -120,6 +123,7 @@ class PortfolioMgmtFragment : Fragment() {
                         val intent = Intent(view.context, Graph::class.java)
                         intent.putExtra("res", mptCacheImg)
                         startActivity(intent)
+                        simulate = false
                     }
 
                     if (mptCacheLoad.contains("Quandl API cannot load price data")) {
