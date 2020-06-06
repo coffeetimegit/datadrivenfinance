@@ -58,8 +58,8 @@ def SMA(select):
     image = Image.open(dir)
 
     width, height = image.size
-    left = width/15
-    top = height/15
+    left = width/17
+    top = height/17
     right = width
     bottom = height
     image = image.crop((left, top, right, bottom))
