@@ -1,15 +1,14 @@
-import quandl
 import numpy as np
 import pandas as pd
 import scipy.optimize as sco
-import heapq
 import matplotlib.pyplot as plt
 from PIL import Image
+import requests
+from bs4 import BeautifulSoup
+import json
 from Static import SP500
 import os
 
-
-quandl.ApiConfig.api_key = '-kw-n8eEQg3ZaUP8tUsr'
 
 
 def MPT(stocks, simulation):
@@ -32,60 +31,69 @@ def MPT(stocks, simulation):
 
     simulation = int(simulation[1:-1])
 
-
     products = []
     for item in select:
         products.append(SP500.get(item))
 
-    data = quandl.get_table('WIKI/PRICES', qopts={'columns': ['date', 'close', 'ticker']}, ticker=products,
-                            paginate=True).dropna()
-    data.rename(columns={'date': 'Date'}, inplace=True)
-    data = data.sort_values(by=['Date'])
+    url_prefix = 'https://sandbox.iexapis.com/stable/stock/'
+    url_suffix = '/chart/max?token=Tsk_d536dffef19e4ae4941ea4ac530d6133'
 
-    start = []
-    end = []
+    start = None
+    end = None
+    consolidated = pd.DataFrame()
+
     unfound = []
-    for i in products:
-        individual = pd.DataFrame()
-        individual = data[data['ticker'] == i]
-        try:
-            start.append(individual.values[0][0].date())
-            end.append(individual.values[-1][0].date())
-        except IndexError:
-            unfound.append(i)
+    for product in products:
 
-    if len(unfound) > 0:
+        try:
+            source = requests.get(url_prefix + product.lower() + url_suffix)
+            soup = BeautifulSoup(source.text, 'html.parser')
+            data = json.loads(str(soup))
+
+            temp_date = []
+            temp_pri`ce = []
+            for item in data:
+                temp_date.append(item['date'])
+                temp_price.append(item['close'])
+
+            if start:
+                if list(temp_date)[0] > start:
+                    start = list(temp_date)[0]
+            else:
+                start = list(temp_date)[0]
+
+            if end:
+                if list(temp_date)[-1] < end:
+                    end = list(temp_date)[-1]
+            else:
+                end = list(temp_date)[-1]
+
+            if len(consolidated) == 0:
+                consolidated = pd.DataFrame({'Date': temp_date, product: temp_price})
+
+            else:
+                consolidated = pd.merge(consolidated, pd.DataFrame({'Date': temp_date, product: temp_price})).dropna()
+
+
+        except json.decoder.JSONDecodeError:
+            unfound.append(product)
+
+
+    if unfound:
         key_list = list(SP500.keys())
         val_list = list(SP500.values())
-
         unfound_stock = []
         for filter in unfound:
             products.remove(filter)
             select.remove(key_list[val_list.index(filter)])
             unfound_stock.append(key_list[val_list.index(filter)])
 
-        message = 'Quandl API cannot load price data for\n' + '\n'.join(unfound_stock)
+        message = 'IEX API cannot load price data for\n' + '\n'.join(unfound_stock)
 
 
     if len(products) < 2:
         return ['error', stocks, message]
 
-
-    start = heapq.nlargest(1, start)[0]
-    end = heapq.nsmallest(1, end)[0]
-
-    consolidated = pd.DataFrame()
-
-    for j in products:
-        adjusted = pd.DataFrame()
-        adjusted = data[data['ticker'] == j]
-        adjusted = adjusted.set_index('Date')
-        adjusted = adjusted[str(start):str(end)]
-        if products.index(j) == 0:
-            consolidated = adjusted.drop('ticker', axis=1)
-            consolidated.rename(columns={'close': j}, inplace=True)
-        else:
-            consolidated[j] = adjusted['close']
 
     noa = len(products)
     consolidated = consolidated[products]
@@ -172,8 +180,8 @@ def MPT(stocks, simulation):
     image = Image.open(dir)
 
     width, height = image.size
-    left = width/17
-    top = height/17
+    left = width/19
+    top = height/19
     right = width
     bottom = height
     image = image.crop((left, top, right, bottom))
