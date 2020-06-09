@@ -1,59 +1,69 @@
-import quandl
 import numpy as np
+import pandas as pd
 from matplotlib.figure import Figure
 from pylab import plt
 from PIL import Image
+import requests
+from bs4 import BeautifulSoup
+import json
 import os
 from Static import SP500
 
 
-quandl.ApiConfig.api_key = '-kw-n8eEQg3ZaUP8tUsr'
-
-
 def SMA(select):
 
-    error_msg = 'Quandl API cannot load price data for ' + select
-
     ticker = SP500.get(select)
-    data = quandl.get_table('WIKI/PRICES', qopts={'columns': ['date', 'close', 'ticker']}, ticker=ticker, paginate=True)
-    data.rename(columns={'date': 'Date'}, inplace=True)
 
-    if data.empty:
+    try:
+        url_prefix = 'https://sandbox.iexapis.com/stable/stock/'
+        url_suffix = '/chart/max?token=Tsk_d536dffef19e4ae4941ea4ac530d6133'
+        source = requests.get(url_prefix + ticker.lower() + url_suffix)
+        soup = BeautifulSoup(source.text, 'html.parser')
+        data = json.loads(str(soup))
+
+        temp_date = []
+        temp_price = []
+        for item in data:
+            temp_date.append(item['date'])
+            temp_price.append(item['close'])
+        data = pd.DataFrame({'Date': temp_date, select: temp_price})
+        data = data.set_index('Date')
+
+    except json.decoder.JSONDecodeError:
+        error_msg = 'IEX API cannot load price data for ' + select
         return ['error', error_msg]
 
-    data = data.sort_values(by=['Date'])
-    data = data.set_index('Date')
 
-
-    SMAs_Short = 42
-    SMAs_Long = 252
+    SMAs_Short = 12
+    SMAs_Long = 52
 
     df = Figure()
-    df = data[data['ticker'] == ticker]
-    df['SMAs_Short'] = df['close'].rolling(SMAs_Short).mean()
-    df['SMAs_Long'] = df['close'].rolling(SMAs_Long).mean()
-    df.rename(columns={'ticker': 'Ticker'}, inplace=True)
+    df = data
+
+    df['SMAs_Short'] = df[select].rolling(SMAs_Short).mean()
+    df['SMAs_Long'] = df[select].rolling(SMAs_Long).mean()
     df.dropna(inplace=True)
-    df.rename(columns={'close': select}, inplace=True)
     df.plot(figsize=(10, 10), linewidth=0.8)
     plt.ylabel('Price')
+
     df['Position'] = np.where(df['SMAs_Short'] > df['SMAs_Long'], 1, -1)
     df['Trade'] = np.where(df['Position'] != df['Position'].shift(1), 'Trade', 'Still')
+
     ax = df.plot(secondary_y='Position', figsize=(10, 10), linewidth=0.8)
     plt.ylabel('Position')
-    df.rename(columns={select: 'Close'}, inplace=True)
-    df = df[df['Trade'] == 'Trade'].drop(['Ticker', 'SMAs_Short', 'SMAs_Long', 'Trade'], axis=1)
+
+    df = df[df['Trade'] == 'Trade'].drop(['SMAs_Short', 'SMAs_Long', 'Trade'], axis=1)
+
     res = []
     for i in range(len(df)):
         if df['Position'][i] == 1:
-            res.append('Buy ' + ticker + ' on ' + str(df.index[i].date().strftime("%b %d, %Y")) + ' Price at ' + str(df['Close'][i]) + '\n')
+             res.append('Buy ' + ticker + ' on ' + str(df.index[i]) + ' Price at ' + str(format(df[select][i], ',')) + '\n')
         else:
-            res.append('Sell ' + ticker + ' on ' + str(df.index[i].date().strftime("%b %d, %Y")) + ' Price at ' + str(df['Close'][i]) + '\n')
+            res.append('Sell ' + ticker + ' on ' + str(df.index[i]) + ' Price at ' + str(format(df[select][i], ',')) + '\n')
 
 
     dir = os.environ["HOME"] + '/smagraph.png'
     plt.savefig(dir)
-
 
     image = Image.open(dir)
 
