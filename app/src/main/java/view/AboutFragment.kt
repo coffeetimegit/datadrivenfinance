@@ -50,9 +50,9 @@ class AboutFragment : Fragment() {
         anaconda.setOnClickListener {
             Toast.makeText(activity, "Anaconda: An open-source distribution of the Python and R programming languages for scientific computing.", Toast.LENGTH_LONG).show()
         }
-        val quandl = view.findViewById(R.id.quandlLogo) as ImageView
-        quandl.setOnClickListener {
-            Toast.makeText(activity, "Quandl: An Application Programming Interface (API) that provides financial, economic and alternative data.", Toast.LENGTH_LONG).show()
+        val iex = view.findViewById(R.id.iexLogo) as ImageView
+        iex.setOnClickListener {
+            Toast.makeText(activity, "Investors Exchange (IEX) Cloud: An Application Programming Interface (API) that provides financial data.", Toast.LENGTH_LONG).show()
         }
         val androidstudio = view.findViewById(R.id.androidStudioLogo) as ImageView
         androidstudio.setOnClickListener {
