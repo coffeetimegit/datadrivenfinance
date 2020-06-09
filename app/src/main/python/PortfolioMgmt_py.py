@@ -51,7 +51,7 @@ def MPT(stocks, simulation):
             data = json.loads(str(soup))
 
             temp_date = []
-            temp_pri`ce = []
+            temp_price = []
             for item in data:
                 temp_date.append(item['date'])
                 temp_price.append(item['close'])
