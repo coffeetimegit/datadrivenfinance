@@ -163,7 +163,7 @@ def MPT(stocks, simulation):
     tvols = np.array(tvols)
 
     plt.figure(figsize=(10, 10))
-    plt.scatter(pvols, prets, c=(prets/pvols)*100, marker='.', alpha=0.8, cmap='coolwarm')
+    plt.scatter(pvols, prets, c=(prets/pvols)*100, marker='.', alpha=0.8, cmap='coolwarm_r')
     plt.plot(tvols, trets, 'b', lw=2.5)
     plt.plot(Volatility(optv['x']), Return(optv['x']),
              'r*', markersize=15)
