@@ -1,12 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-import os
 from datetime import datetime
-from os.path import dirname, join
 
-
-filename = join(dirname(__file__), "news.json")
 
 def news():
 

@@ -40,8 +40,13 @@ def VAR(select):
     latest_price = data.values[-1][1]
     simulation = 10000
 
-    percs = np.linspace(0, 100, num=simulation)[1:-1]
-    percs_display = [0.01, 0.1, 1, 2.5, 5, 10, 20, 30, 40, 50]
+    percs = np.linspace(0, 100, num=simulation)
+    percs_display =     {0.01: int((0.01/100)*len(percs)), 0.1: int((0.1/100)*len(percs)),
+                         1: int((1/100)*len(percs)), 2.5: int((2.5/100)*len(percs)),
+                         5: int((5/100)*len(percs)), 10: int((10/100)*len(percs)),
+                         20: int((20/100)*len(percs)), 30: int((30/100)*len(percs)),
+                         40: int((40/100)*len(percs)), 50: int((50/100)*len(percs))}
+
 
 
     risk = np.log(data[select] / data[select].shift(1))
@@ -79,12 +84,12 @@ def VAR(select):
     result = str(format(simulation, ',')) + ' simulations generated.\n\n'
     description = 'Value at Risk profile for ' + select + ' that is trading at ' + str(latest_price) + ' on ' + str(latest_date) + '.\n\n'
 
-    title = '%16s %16s' % ('Confidence Level', 'Value at Risk')
+    title = '%16s %16s' % ('Confidence Level', 'Loss Amount')
     line = '-----' * 11
 
     res = []
-    for pair in zip(percs_display, VaR):
-        res.append('%14f %19f' % (100 - pair[0], -pair[1]))
+    for k, v in percs_display.items():
+        res.append('%14f %22f' % (100 - k, -VaR[v]))
 
     return [dir, result + description + title + '\n' + line + '\n' + '\n'.join(res)]
 
