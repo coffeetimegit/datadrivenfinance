@@ -85,7 +85,7 @@ def VAR(select):
     description = 'Value at Risk profile for ' + select + ' that is trading at ' + str(latest_price) + ' on ' + str(latest_date) + '.\n\n'
 
     title = '%16s %16s' % ('Confidence Level', 'Loss Amount')
-    line = '-----' * 11
+    line = '-----' * 12
 
     res = []
     for k, v in percs_display.items():
