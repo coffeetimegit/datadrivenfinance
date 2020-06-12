@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = SupplementalAdapter(supportFragmentManager)
         tabLayoutId.setupWithViewPager(viewPager)
 
-        tabLayoutId.setTabTextColors(Color.GRAY, Color.parseColor("white"))
+        tabLayoutId.setTabTextColors(Color.GRAY, Color.parseColor("black"))
     }
 
 }

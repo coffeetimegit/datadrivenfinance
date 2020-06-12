@@ -12,6 +12,7 @@ class SupplementalAdapter(fragmentManager: FragmentManager): FragmentPagerAdapte
             0 -> return AlgoTradingFragment()
             1 -> return ValueatRiskFragment()
             2 -> return PortfolioMgmtFragment()
+            //3 -> return BondValuationFragment()
             3 -> return ValuationsFragment()
             4 -> return MacroDataFragment()
             5 -> return NewsFragment()
@@ -30,6 +31,7 @@ class SupplementalAdapter(fragmentManager: FragmentManager): FragmentPagerAdapte
             0 -> return "Algo Trading"
             1 -> return "Risk Management"
             2 -> return "Portfolio Optimization"
+            //3 -> return "Bond Valuation"
             3 -> return "Option Valuation"
             4 -> return "Macroeconomic Data"
             5 -> return "News"
