@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaquo.python.Python
 import com.example.inprogress.R
@@ -43,7 +44,12 @@ class NewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var raw = initNews()
-        read_json(raw)
+        if (raw == "error") {
+            var errorMsg = "Error parsing Thomson Reuters news. Please contact the creator for its resolution."
+            Toast.makeText(activity, errorMsg, Toast.LENGTH_LONG).show()
+        } else {
+            read_json(raw)
+        }
     }
 
 

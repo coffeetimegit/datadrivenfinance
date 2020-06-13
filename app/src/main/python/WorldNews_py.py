@@ -13,22 +13,27 @@ def news():
     res = []
 
     section = 'tab-markets-'
-    for region in range(3):
 
-        if region == 0:
-            section_id = section + 'us'
-            RegionNews = soup.find(id=section_id)
-            cache.append(news_all(RegionNews.find(class_='module-content')))
+    try:
+        for region in range(3):
 
-        elif region == 1:
-            section_id = section + 'emea'
-            RegionNews = soup.find(id=section_id)
-            cache.append(news_all(RegionNews.find(class_='module-content')))
+            if region == 0:
+                section_id = section + 'us'
+                RegionNews = soup.find(id=section_id)
+                cache.append(news_all(RegionNews.find(class_='module-content')))
 
-        else:
-            section_id = section + 'asia'
-            RegionNews = soup.find(id=section_id)
-            cache.append(news_all(RegionNews.find(class_='module-content')))
+            elif region == 1:
+                section_id = section + 'emea'
+                RegionNews = soup.find(id=section_id)
+                cache.append(news_all(RegionNews.find(class_='module-content')))
+
+            else:
+                section_id = section + 'asia'
+                RegionNews = soup.find(id=section_id)
+                cache.append(news_all(RegionNews.find(class_='module-content')))
+
+    except AttributeError:
+        return 'error'
 
     for region in range(len(cache)):
         for single in range(len(cache[region])):
