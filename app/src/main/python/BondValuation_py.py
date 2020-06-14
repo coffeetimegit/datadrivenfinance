@@ -10,16 +10,14 @@ import os
 
 def FIV(product, bondDetails):
 
-    print(product)
     product_details = bondDetails[bondDetails.index(product) - 1: bondDetails.index(product) + 40]
-    print(product_details)
 
     cpn_details = product_details[product_details.index('['):product_details.index(',')]
     cpn = ''
     for cpn_text in cpn_details:
         if cpn_text != '[' and cpn_text != "'" and cpn_text != ",":
             cpn += cpn_text
-    cpn = round(float(cpn)/100, 7)
+    cpn = round(float(cpn)/200, 7)
 
     mat_details = product_details[product_details.index(','):product_details.index(']')]
     mat = ''
@@ -29,19 +27,22 @@ def FIV(product, bondDetails):
     mat = datetime.strptime(mat, '%m/%d/%Y').date()
     today = date.today()
 
-    payment = int((mat - today).days / 365)
-    print('Payment ', payment)
-    #print('Remainder ', remainder)
+    payment, remainder = divmod(int((mat - today).days / 365 * 2), 1)
+    payment = int(payment)
 
     face = 100
     yld = cpn
-    #tenor = payment + remainder
 
-    def BondPrice(face, cpn, yld, pymt):
-        Price = ((face + cpn * 100) * pymt) * face / ((face + yld * 100) * pymt)
-        return Price
+    def BondPrice(face, cpn, yld, pymt, remainder):
+        res = [(face * cpn * remainder) / ((1 + yld) ** 1)]
+        for i in range(pymt - 1):
+            res.append((face * cpn) / ((1 + yld) ** (i+1)))
+        res.append((face + (face * cpn)) / (1 + yld) ** pymt)
+        return sum(res)
 
-    duration_price = BondPrice(face, cpn, yld, payment)
+
+    duration_price = BondPrice(face, cpn, yld, payment, remainder)
+
 
     def MacaulayDuration(face, cpn, yld, pymt):
         CashFlow = []
@@ -53,48 +54,39 @@ def FIV(product, bondDetails):
             CashFlow.append(face * cpn)
             CashFlowPV.append(CashFlow[-1] / (1 + yld) ** (cnt + 1))
             TimeWeightedCashFlowPV.append((cnt + 1) * CashFlowPV[-1])
-            print('CashFlow ', CashFlow[-1], 'CashFlowPV ', CashFlowPV[-1], 'TimeWeightedCashFlowPV ', TimeWeightedCashFlowPV[-1])
 
         #Make sure to also create a condition if maturity within a year later
         CashFlow.append(face + (face * cpn))
         CashFlowPV.append(CashFlow[-1] / (1 + yld) ** (pymt))
         TimeWeightedCashFlowPV.append((pymt) * CashFlowPV[-1])
-        print('CashFlow ', CashFlow[-1], 'CashFlowPV ', CashFlowPV[-1], 'TimeWeightedCashFlowPV ', TimeWeightedCashFlowPV[-1])
         Macaulay = sum(TimeWeightedCashFlowPV) / sum(CashFlowPV)
 
         return Macaulay
 
     coupon_frequency = 1
-    yield_change = 0.001
+    yield_change = 0.01
     ModD = MacaulayDuration(face, cpn, yld, payment) / (1 + (yld / coupon_frequency)) * yield_change
-    print('Modified Duration below')
-    print(ModD)
+
 
     yld_perm = []
     prices = []
-    duration_line_pos = []
-    duration_line_neg = []
-    res = []
 
 
-    permutations = np.linspace(yld-0.5, yld+0.5, 10001)
-    #permutations = permutations[4500:5500]
+    permutations = np.linspace(yld-0.05, yld+0.05, 1001)
     for i in permutations:
         yld_perm.append(round(i, 4))
-        prices.append(BondPrice(face, cpn, yld_perm[-1], payment))
+        prices.append(BondPrice(face, cpn, yld_perm[-1], payment, remainder))
 
-    yld_perm = yld_perm[1:]
+
     prices = prices[1:]
-    print(yld_perm[int(len(yld_perm)/2)])
-    print(yld_perm) # Good to go
-    print(len(yld_perm))
-
-    print(prices) # Good to go
-    print('Actual Price in the middle: ', prices[int(len(prices)/2)])
-    print(len(prices))
+    yld_perm = yld_perm[1:]
+    yld_perm_adjusted = []
+    for yd in yld_perm:
+        yld_perm_adjusted.append(yd + yld)
 
 
     duration_line_pos = [duration_price]
+    duration_line_neg = []
     for j in range(int(len(permutations)/2)):
         duration_line_pos.append(duration_price + ModD * j)
         duration_line_neg.append(duration_price - ModD * j)
@@ -102,17 +94,15 @@ def FIV(product, bondDetails):
     duration_line_pos.sort(reverse=True)
     duration_line = duration_line_pos + duration_line_neg
     duration_line = duration_line[:-1]
-    print(duration_line) # Good to go
 
     plt.figure(figsize=(10, 10))
-    plt.plot(yld_perm, duration_line, 'g', label='Duration')
-    plt.plot(yld_perm, prices, 'c', label='Actual Price')
-    plt.plot(yld, duration_price, 'y*', markersize=10)
+    plt.plot(yld_perm_adjusted, duration_line, 'g', label='Duration', linewidth=2)
+    plt.plot(yld_perm_adjusted, prices, 'c', label='Actual Price', linewidth=2)
+    plt.plot(yld * 2, duration_price, 'y*', markersize=20)
     plt.title('Bond Duration and Convexity for ' + product)
     plt.xlabel('Yield')
     plt.ylabel('Bond Price')
     plt.legend()
-    #plt.show()
 
     dir = os.environ["HOME"] + '/bondgraph.png'
     plt.savefig(dir)
@@ -140,26 +130,31 @@ def FIV(product, bondDetails):
 
 def JGBISIN():
 
-    r = requests.get('https://www.solactive.com/Indices/?indexmembers=DE000SLA6QX8')
-    soup = BeautifulSoup(r.text, 'html.parser')
-    data_table = soup.find('tbody')
+    try:
+        r = requests.get('https://www.solactive.com/Indices/?indexmembers=DE000SLA6QX8')
+        soup = BeautifulSoup(r.text, 'html.parser')
+        data_table = soup.find('tbody')
 
-    JGBs = {}
+        JGBs = {}
 
-    for jgb in range(len(data_table) - 1):
+        for jgb in range(len(data_table) - 1):
 
-        try:
-            if 'YEAR ISSUE' in str(data_table.find_all(class_='name')[jgb].text.strip()):
-                JGBs[data_table.find_all(class_='isin')[jgb].text.strip()] = [data_table.find_all('tr')[jgb].find_all(class_='shares')[0].text.strip(),
-                                                                              data_table.find_all('tr')[jgb].find_all(class_='shares')[1].text.strip()]
+            try:
+                if 'YEAR ISSUE' in str(data_table.find_all(class_='name')[jgb].text.strip()):
+                    JGBs[data_table.find_all(class_='isin')[jgb].text.strip()] = [data_table.find_all('tr')[jgb].find_all(class_='shares')[0].text.strip(),
+                                                                                  data_table.find_all('tr')[jgb].find_all(class_='shares')[1].text.strip()]
 
-        except IndexError:
-            break
+            except IndexError:
+                break
+
+    except:
+        return ['error', None]
+
+    if not JGBs:
+        return ['error', None]
 
 
     JGBList = list(JGBs.keys())
     JGBList.sort()
 
     return [JGBList, JGBs]
-
-

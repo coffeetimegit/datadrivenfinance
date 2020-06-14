@@ -52,20 +52,25 @@ class BondValuationFragment : Fragment() {
             val bondList = initBondList()
             val bondSelect = bondList?.get(0).toString()
 
-            var product = ""
-            isins.add("Select JGB")
-            for (bond in bondSelect) {
-                if (bond.toString() != "[" && bond.toString() != "]") {
-                    if (bond.toString() == " ") {
-                        isins.add(product)
-                        product = ""
-                    }
-                    if (bond.toString() != "'" && bond.toString() != "," && bond.toString() != " ") {
-                        product += bond
+            if (bondSelect == "error") {
+                val errorMsg = "Error parsing JGB ISINs data from Solactive. Please contact the creator for its resolution."
+                Toast.makeText(activity, errorMsg, Toast.LENGTH_LONG).show()
+            } else {
+                var product = ""
+                isins.add("Select JGB")
+                for (bond in bondSelect) {
+                    if (bond.toString() != "[" && bond.toString() != "]") {
+                        if (bond.toString() == " ") {
+                            isins.add(product)
+                            product = ""
+                        }
+                        if (bond.toString() != "'" && bond.toString() != "," && bond.toString() != " ") {
+                            product += bond
+                        }
                     }
                 }
+                isins.add(product)
             }
-            isins.add(product)
 
             val bondDetails = bondList?.get(1)?.toString()
 

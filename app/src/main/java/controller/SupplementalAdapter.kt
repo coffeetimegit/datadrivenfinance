@@ -12,18 +12,18 @@ class SupplementalAdapter(fragmentManager: FragmentManager): FragmentPagerAdapte
             0 -> return AlgoTradingFragment()
             1 -> return ValueatRiskFragment()
             2 -> return PortfolioMgmtFragment()
-            //3 -> return BondValuationFragment()
             3 -> return ValuationsFragment()
-            4 -> return MacroDataFragment()
-            5 -> return NewsFragment()
-            6 -> return AboutFragment()
+            4 -> return BondValuationFragment()
+            5 -> return MacroDataFragment()
+            6 -> return NewsFragment()
+            7 -> return AboutFragment()
 
         }
         return null!!
     }
 
     override fun getCount(): Int {
-        return 7
+        return 8
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
@@ -31,11 +31,11 @@ class SupplementalAdapter(fragmentManager: FragmentManager): FragmentPagerAdapte
             0 -> return "Algo Trading"
             1 -> return "Risk Management"
             2 -> return "Portfolio Optimization"
-            //3 -> return "Bond Valuation"
             3 -> return "Option Valuation"
-            4 -> return "Macroeconomic Data"
-            5 -> return "News"
-            6 -> return "About"
+            4 -> return "Bond Valuation"
+            5 -> return "Macroeconomic Data"
+            6 -> return "News"
+            7 -> return "About"
 
         }
         return null
