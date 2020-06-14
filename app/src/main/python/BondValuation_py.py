@@ -80,7 +80,6 @@ def FIV(product, bondDetails):
         yld_perm.append(round(i, 4))
         prices.append(BondPrice(face, cpn, yld_perm[-1], payment, remainder))
 
-    print(permutations)
 
     prices = prices[1:]
     yld_perm = yld_perm[1:]
@@ -98,7 +97,6 @@ def FIV(product, bondDetails):
     duration_line_pos.sort(reverse=True)
     duration_line = duration_line_pos + duration_line_neg
     duration_line = duration_line[:-1]
-    print(duration_line)
 
 
     def Convexity(increase, decrease, initial, yld_delta):

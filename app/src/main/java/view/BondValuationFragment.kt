@@ -95,7 +95,7 @@ class BondValuationFragment : Fragment() {
 
             bondBtn.setOnClickListener {
 
-                if (!bondRes.text.contains("Simple Moving Average")) {
+                if (!bondRes.text.contains("Product Name")) {
 
                     if (bondRes.text == "Select JGB" || bondRes.text == "") {
                         Toast.makeText(activity, "Error: Select a JGB from the dropdown!", Toast.LENGTH_SHORT).show()
