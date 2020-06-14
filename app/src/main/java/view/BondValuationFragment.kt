@@ -18,6 +18,10 @@ import kotlinx.android.synthetic.main.fragment_bondvaluation.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+var isins = mutableSetOf<String>()
+var bondDetails = String()
+
+
 /**
  * A simple [Fragment] subclass.
  * Use the [BondValuationFragment.newInstance] factory method to
@@ -46,11 +50,11 @@ class BondValuationFragment : Fragment() {
         option = view!!.findViewById(R.id.selectBond)
         result = view!!.findViewById(R.id.bondRes)
 
-        var isins = mutableSetOf<String>()
+        //var isins = mutableSetOf<String>()
 
         if (isins.isEmpty()) {
-            val bondList = initBondList()
-            val bondSelect = bondList?.get(0).toString()
+            var bondList = initBondList()
+            var bondSelect = bondList?.get(0).toString()
 
             if (bondSelect == "error") {
                 val errorMsg = "Error parsing JGB ISINs data from Solactive. Please contact the creator for its resolution."
@@ -72,7 +76,8 @@ class BondValuationFragment : Fragment() {
                 isins.add(product)
             }
 
-            val bondDetails = bondList?.get(1)?.toString()
+
+            bondDetails = bondList?.get(1).toString()
 
 
         option.adapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_list_item_1, isins.toList())
@@ -120,6 +125,57 @@ class BondValuationFragment : Fragment() {
                     }
                 }
             }
+        } else {
+
+            var bondDetails = bondDetails
+
+
+            option.adapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_list_item_1, isins.toList())
+
+            option.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    return null!!
+                }
+
+                override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                ) {
+                    result.text = isins.toList().get(position)
+                }
+            }
+
+
+            bondBtn.setOnClickListener {
+
+                if (!bondRes.text.contains("Product Name")) {
+
+                    if (bondRes.text == "Select JGB" || bondRes.text == "") {
+                        Toast.makeText(activity, "Error: Select a JGB from the dropdown!", Toast.LENGTH_SHORT).show()
+                    } else {
+
+                        var bondCache = initFIV(bondDetails)
+
+                        var bondCacheImg = bondCache?.get(0).toString()
+                        var bondCacheTxt = bondCache?.get(1).toString()
+
+                        if (bondCacheImg != "error") {
+                            bondRes.text = bondCacheTxt
+
+                            val intent = Intent(view.context, Graph::class.java)
+                            intent.putExtra("res", bondCacheImg)
+                            startActivity(intent)
+                        }
+
+                        if (bondCacheImg == "error") {
+                            Toast.makeText(activity, bondCacheTxt, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+
         }
 
         bondClear.setOnClickListener {
