@@ -87,5 +87,3 @@ def news_all(News):
         obj.append(article)
 
     return obj
-
-

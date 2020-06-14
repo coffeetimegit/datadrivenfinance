@@ -45,9 +45,10 @@ def FIV(product, bondDetails):
 
 
     def MacaulayDuration(face, cpn, yld, pymt):
-        CashFlow = []
-        CashFlowPV = []
-        TimeWeightedCashFlowPV = []
+        CashFlow = [face * cpn * remainder]
+        CashFlowPV = [CashFlow[-1] / (1 + yld)]
+        TimeWeightedCashFlowPV = [CashFlowPV[-1]]
+
 
         for cnt in range(pymt - 1):
 
@@ -65,7 +66,9 @@ def FIV(product, bondDetails):
 
     coupon_frequency = 1
     yield_change = 0.01
-    ModD = MacaulayDuration(face, cpn, yld, payment) / (1 + (yld / coupon_frequency)) * yield_change
+
+    MacD = MacaulayDuration(face, cpn, yld, payment)
+    ModD = MacD / (1 + (yld / coupon_frequency)) * yield_change
 
 
     yld_perm = []
@@ -77,6 +80,7 @@ def FIV(product, bondDetails):
         yld_perm.append(round(i, 4))
         prices.append(BondPrice(face, cpn, yld_perm[-1], payment, remainder))
 
+    print(permutations)
 
     prices = prices[1:]
     yld_perm = yld_perm[1:]
@@ -94,12 +98,53 @@ def FIV(product, bondDetails):
     duration_line_pos.sort(reverse=True)
     duration_line = duration_line_pos + duration_line_neg
     duration_line = duration_line[:-1]
+    print(duration_line)
+
+
+    def Convexity(increase, decrease, initial, yld_delta):
+        return yld_delta ** 2 * ((increase + decrease) - (2 * initial)) / (2 * initial * (yld_delta ** 2))
+
+    increase = prices[int(len(prices) / 2 - (1 * 100))]
+    decrease = prices[int(len(prices) / 2 + (1 * 100))]
+    yld_delta = 0.01
+
+
+    if product[:5] == 'JP102':
+        product_name = 'JN' + str(int(product[5:8]))
+        product_fullname = '- Product Name:\n  2 Year Japanese Govt Bond (' + product_name + ').\n\n'
+    elif product[:5] == 'JP105':
+        product_name = 'JS' + str(int(product[5:8]))
+        product_fullname = '- Product Name:\n  5 Year Japanese Govt Bond (' + product_name + ').\n\n'
+    elif product[:5] == 'JP110':
+        product_name = 'JB' + str(int(product[5:8]))
+        product_fullname = '- Product Name:\n  10 Year Japanese Govt Bond (' + product_name + ').\n\n'
+    elif product[:5] == 'JP120':
+        product_name = 'JL' + str(int(product[5:8]))
+        product_fullname = '- Product Name:\n  20 Year Japanese Govt Bond (' + product_name + ').\n\n'
+    elif product[:5] == 'JP130':
+        product_name = 'JX' + str(int(product[5:8]))
+        product_fullname = '- Product Name:\n  30 Year Japanese Govt Bond (' + product_name + ').\n\n'
+    elif product[:5] == 'JP140':
+        product_name = 'JU' + str(int(product[5:8]))
+        product_fullname = '- Product Name:\n  40 Year Japanese Govt Bond (' + product_name + ').\n\n'
+    else:
+        product_name = 'JBI' + str(int(product[5:8]))
+        product_fullname = 'CPI Linked Japanese Govt Bond (' + product_name + ').\n\n'
+
+
+    cpn_msg = '- Coupon Rate:\n  ' + str(format(cpn/2, '.2%')) + ' per year.\n\n'
+    cpn_freg_msg = '- Coupon Payment Frequency:\n  2 times per year.\n\n'
+    mat_msg = '- Maturity Date:\n  ' + str(mat) + '.\n\n'
+    mac_duration_msg = '- Macaulay Duration:\n  ' + str(round(MacD/2, 2)) + ' years' + '.\n\n'
+    mod_duration_msg = '- Modified Duration:\n  JPY ' + str(round(ModD, 5)) + ' for 1bp change in yield.\n\n'
+    convexity_msg = '- Convexity Adjustment:\n  ' + str(format(Convexity(increase, decrease, duration_price, yld_delta) / 100, '.5%')) + ' for 1.00% change in yield.\n\n'
+
 
     plt.figure(figsize=(10, 10))
     plt.plot(yld_perm_adjusted, duration_line, 'g', label='Duration', linewidth=2)
-    plt.plot(yld_perm_adjusted, prices, 'c', label='Actual Price', linewidth=2)
+    plt.plot(yld_perm_adjusted, prices, 'c', label='Price-Yield Curve', linewidth=2)
     plt.plot(yld * 2, duration_price, 'y*', markersize=20)
-    plt.title('Bond Duration and Convexity for ' + product)
+    plt.title('Bond Duration and Price-Yield Curve: ' + product)
     plt.xlabel('Yield')
     plt.ylabel('Bond Price')
     plt.legend()
@@ -118,12 +163,8 @@ def FIV(product, bondDetails):
 
     image.rotate(270).save(dir)
 
-    def Convexity(increase, decrease, initial, yld_perm):
-        res = []
-        for i in range(int(len(yld_perm)/2)):
-            res.append()
-
-    return [dir, 'Convexity Result']
+    return [dir, product_fullname + cpn_msg + cpn_freg_msg +
+            mat_msg + mac_duration_msg + mod_duration_msg + convexity_msg]
 
 
 
