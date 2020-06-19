@@ -82,14 +82,14 @@ def VAR(select):
     image.rotate(270).save(dir)
 
     result = str(format(simulation, ',')) + ' simulations generated.\n\n'
-    description = 'Value at Risk profile for ' + select + ' that is trading at ' + str(latest_price) + ' on ' + str(latest_date) + '.\n\n'
+    description = 'Value at Risk profile for ' + select + ' that is trading at ' + format(round(latest_price, 2), ',') + ' on ' + str(latest_date) + '.\n\n'
 
     title = '%16s %16s' % ('Confidence Level', 'Loss Amount')
     line = '-----' * 12
 
     res = []
     for k, v in percs_display.items():
-        res.append('%14f %22f' % (100 - k, -VaR[v]))
+        res.append(' ' * 6 + format(100 - k, '.4f') + ' ' * 20 + format(-VaR[v], ',.2f'))
 
     return [dir, result + description + title + '\n' + line + '\n' + '\n'.join(res)]
 
