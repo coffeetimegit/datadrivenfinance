@@ -50,6 +50,10 @@ def MPT(stocks, simulation):
             soup = BeautifulSoup(source.text, 'html.parser')
             data = json.loads(str(soup))
 
+            if not data:
+                unfound.append(product)
+                continue
+
             temp_date = []
             temp_price = []
             for item in data:
@@ -75,8 +79,9 @@ def MPT(stocks, simulation):
                 consolidated = pd.merge(consolidated, pd.DataFrame({'Date': temp_date, product: temp_price})).dropna()
 
 
-        except json.decoder.JSONDecodeError:
-            unfound.append(product)
+        except:
+            error_msg = 'Error: Internet connection failure.'
+            return ['error', stocks, error_msg]
 
 
     if unfound:
@@ -88,7 +93,7 @@ def MPT(stocks, simulation):
             select.remove(key_list[val_list.index(filter)])
             unfound_stock.append(key_list[val_list.index(filter)])
 
-        message = 'IEX API cannot load price data for\n' + '\n'.join(unfound_stock)
+        message = 'Error: IEX API cannot load price data for\n' + '\n'.join(unfound_stock) + '.'
 
 
     if len(products) < 2:

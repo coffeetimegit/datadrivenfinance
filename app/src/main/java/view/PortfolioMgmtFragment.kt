@@ -126,7 +126,8 @@ class PortfolioMgmtFragment : Fragment() {
                         simulate = false
                     }
 
-                    if (mptCacheLoad.contains("IEX API cannot load price data")) {
+                    if (mptCacheLoad.contains("IEX API cannot load price data") ||
+                    mptCacheLoad.contains("Internet connection failure")) {
                         Toast.makeText(activity, mptCacheLoad, Toast.LENGTH_LONG).show()
 
                     }

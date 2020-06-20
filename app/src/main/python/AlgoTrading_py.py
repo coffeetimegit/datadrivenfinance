@@ -21,17 +21,22 @@ def SMA(select):
         soup = BeautifulSoup(source.text, 'html.parser')
         data = json.loads(str(soup))
 
-        temp_date = []
-        temp_price = []
-        for item in data:
-            temp_date.append(item['date'])
-            temp_price.append(item['close'])
-        data = pd.DataFrame({'Date': temp_date, select: temp_price})
-        data = data.set_index('Date')
-
-    except json.decoder.JSONDecodeError:
-        error_msg = 'IEX API cannot load price data for ' + select
+    except:
+        error_msg = 'Error: Internet connection failure.'
         return ['error', error_msg]
+
+
+    if not data:
+        error_msg = 'Error: IEX API cannot load price data for ' + select + '.'
+        return ['error', error_msg]
+
+    temp_date = []
+    temp_price = []
+    for item in data:
+        temp_date.append(item['date'])
+        temp_price.append(item['close'])
+    data = pd.DataFrame({'Date': temp_date, select: temp_price})
+    data = data.set_index('Date')
 
 
     SMAs_Short = 12

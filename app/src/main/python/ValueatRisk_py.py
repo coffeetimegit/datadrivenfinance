@@ -21,16 +21,20 @@ def VAR(select):
         soup = BeautifulSoup(source.text, 'html.parser')
         data = json.loads(str(soup))
 
-        temp_date = []
-        temp_price = []
-        for item in data:
-            temp_date.append(item['date'])
-            temp_price.append(item['close'])
-        data = pd.DataFrame({'Date': temp_date, select: temp_price})
-
-    except json.decoder.JSONDecodeError:
-        error_msg = 'IEX API cannot load price data for ' + select
+    except:
+        error_msg = 'Error: Internet connection failure.'
         return ['error', error_msg]
+
+    if not data:
+        error_msg = 'Error: IEX API cannot load price data for ' + select + '.'
+        return ['error', error_msg]
+
+    temp_date = []
+    temp_price = []
+    for item in data:
+        temp_date.append(item['date'])
+        temp_price.append(item['close'])
+    data = pd.DataFrame({'Date': temp_date, select: temp_price})
 
 
     plt.figure(figsize=(10, 10))
@@ -85,11 +89,11 @@ def VAR(select):
     description = 'Value at Risk profile for ' + select + ' that is trading at ' + format(round(latest_price, 2), ',') + ' on ' + str(latest_date) + '.\n\n'
 
     title = '%16s %16s' % ('Confidence Level', 'Loss Amount')
-    line = '-----' * 12
+    line = 'ー' * 16
 
     res = []
     for k, v in percs_display.items():
-        res.append(' ' * 6 + format(100 - k, '.4f') + ' ' * 20 + format(-VaR[v], ',.2f'))
+        res.append(' ' * 6 + format(100 - k, '.4f') + ' ' * 13 + '|' + ' ' * 7 + format(-VaR[v], ',.2f'))
 
     return [dir, result + description + title + '\n' + line + '\n' + '\n'.join(res)]
 
