@@ -50,12 +50,16 @@ def SMA(select):
     df.dropna(inplace=True)
     df.plot(figsize=(10, 10), linewidth=0.8)
     plt.ylabel('Price')
+    plt.legend(fontsize='large')
+
 
     df['Position'] = np.where(df['SMAs_Short'] > df['SMAs_Long'], 1, -1)
     df['Trade'] = np.where(df['Position'] != df['Position'].shift(1), 'Trade', 'Still')
 
     ax = df.plot(secondary_y='Position', figsize=(10, 10), linewidth=0.8)
     plt.ylabel('Position')
+    plt.title('SMAs Trading Strategy: ' + select)
+
 
     df = df[df['Trade'] == 'Trade'].drop(['SMAs_Short', 'SMAs_Long', 'Trade'], axis=1)
 

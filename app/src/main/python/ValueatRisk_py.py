@@ -65,9 +65,10 @@ def VAR(select):
             bar.set_facecolor("tomato")
 
 
-    plt.title(select)
+    plt.title('Value at Risk Profile: ' + select)
     plt.xlabel('Return')
     plt.ylabel('Frequency')
+
 
 
     dir = os.environ["HOME"] + '/vargraph.png'

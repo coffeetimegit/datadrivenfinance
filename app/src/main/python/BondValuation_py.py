@@ -145,7 +145,7 @@ def FIV(product, bondDetails):
     plt.title('Bond Duration and Price-Yield Curve: ' + product)
     plt.xlabel('Yield')
     plt.ylabel('Bond Price')
-    plt.legend()
+    plt.legend(fontsize='large')
 
     dir = os.environ["HOME"] + '/bondgraph.png'
     plt.savefig(dir)

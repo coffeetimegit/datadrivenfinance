@@ -53,30 +53,30 @@ def MPT(stocks, simulation):
             if not data:
                 unfound.append(product)
                 continue
+            else:
+                temp_date = []
+                temp_price = []
+                for item in data:
+                    temp_date.append(item['date'])
+                    temp_price.append(item['close'])
 
-            temp_date = []
-            temp_price = []
-            for item in data:
-                temp_date.append(item['date'])
-                temp_price.append(item['close'])
-
-            if start:
-                if list(temp_date)[0] > start:
+                if start:
+                    if list(temp_date)[0] > start:
+                        start = list(temp_date)[0]
+                else:
                     start = list(temp_date)[0]
-            else:
-                start = list(temp_date)[0]
 
-            if end:
-                if list(temp_date)[-1] < end:
+                if end:
+                    if list(temp_date)[-1] < end:
+                        end = list(temp_date)[-1]
+                else:
                     end = list(temp_date)[-1]
-            else:
-                end = list(temp_date)[-1]
 
-            if len(consolidated) == 0:
-                consolidated = pd.DataFrame({'Date': temp_date, product: temp_price})
+                if len(consolidated) == 0:
+                    consolidated = pd.DataFrame({'Date': temp_date, product: temp_price})
 
-            else:
-                consolidated = pd.merge(consolidated, pd.DataFrame({'Date': temp_date, product: temp_price})).dropna()
+                else:
+                    consolidated = pd.merge(consolidated, pd.DataFrame({'Date': temp_date, product: temp_price})).dropna()
 
 
         except:
@@ -177,6 +177,7 @@ def MPT(stocks, simulation):
     plt.xlabel('Expected Volatility in percentage')
     plt.ylabel('Expected Return in percentage')
     plt.colorbar(label='Sharpe ratio in percentage')
+    plt.title('Portfolio Optimization')
 
 
     dir = os.environ["HOME"] + '/mptgraph.png'
