@@ -47,6 +47,8 @@ class NewsFragment : Fragment() {
         if (raw == "error") {
             var errorMsg = "Error parsing Thomson Reuters news. Please contact the creator for its resolution."
             Toast.makeText(activity, errorMsg, Toast.LENGTH_LONG).show()
+        } else if (raw.contains("Error")) {
+            Toast.makeText(activity, raw, Toast.LENGTH_LONG).show()
         } else {
             read_json(raw)
         }

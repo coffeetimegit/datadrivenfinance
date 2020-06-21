@@ -6,8 +6,13 @@ from datetime import datetime
 
 def news():
 
-    r = requests.get('https://www.reuters.com/finance/markets')
-    soup = BeautifulSoup(r.text, 'html.parser')
+    try:
+        r = requests.get('https://www.reuters.com/finance/markets')
+        soup = BeautifulSoup(r.text, 'html.parser')
+
+    except:
+        error_msg = 'Error: Internet connection failure.'
+        return error_msg
 
     cache = []
     res = []
