@@ -2,11 +2,13 @@ import quandl
 import pandas as pd
 from pylab import plt
 from PIL import Image
+import requests
+from bs4 import BeautifulSoup
+import json
 from Static import ISO3
 import os
 
 
-quandl.ApiConfig.api_key = '-kw-n8eEQg3ZaUP8tUsr'
 
 def MacroData(raw, data_type, abs):
 
@@ -23,7 +25,6 @@ def MacroData(raw, data_type, abs):
                 select.append(''.join(temp))
                 temp = []
 
-    country = []
     percentage = False
     if data_type == 'population':
         suffix = '_LP'
@@ -42,67 +43,71 @@ def MacroData(raw, data_type, abs):
         suffix = '_TX_RPCH'
         percentage = True
 
-    message = 'Clear country list.'
 
-    for i in select:
-        country.append('ODA/' + ISO3[i] + suffix)
     try:
-        data = quandl.get(country)
-        data = pd.DataFrame(data)
+        url_prefix = 'https://www.quandl.com/api/v3/datasets/ODA/'
+        url_suffix = '?api_key=-kw-n8eEQg3ZaUP8tUsr'
+
+        country_list = {}
+        unfound = []
+        for i in select:
+            temp = {}
+            source = requests.get(url_prefix + ISO3[i] + suffix + url_suffix)
+            soup = BeautifulSoup(source.text, 'html.parser')
+            data_raw = json.loads(str(soup))
+            if 'quandl_error' in data_raw:
+                unfound.append(i)
+                continue
+
+            for val in reversed(data_raw['dataset']['data']):
+                temp[val[0]] = val[1]
+
+            if data_raw['dataset']['data'][-1][1] == 0:
+                del temp[data_raw['dataset']['data'][-1][0]]
+
+            country_list[i] = pd.Series(temp)
+
+        data = pd.DataFrame(country_list).dropna()
+
     except:
+        message = 'Error: Internet connection failure.'
         return ['error', message]
 
+    if unfound:
+        for na in unfound:
+            select.remove(na)
 
-    unfound = []
-    for na in range(len(data.columns)):
-        if 'Not Found' in data.columns[na]:
-            unfound.append(data.columns[na])
-
-    key_list = list(ISO3.keys())
-    val_list = list(ISO3.values())
-
-    for filter in unfound:
-        select.remove(key_list[val_list.index(filter[4:7])])
-
-    error = []
-    if len(unfound) > 0:
-        for drop in unfound:
-            error.append(key_list[val_list.index(drop[4:7])])
-            data.drop(drop, axis = 1, inplace=True)
-
-    if error:
-        message = 'Quandl API cannot load ' + data_type + ' data for \n' + '\n'.join(error)
+    if unfound:
+        message = 'Error: Quandl API cannot load ' + data_type + ' data for \n' + '\n'.join(unfound) + '.'
     else:
         message = None
 
     if len(data.columns) == 0:
         return ['error', message]
 
-
-    for j in range(len(select)):
-        data.rename(columns={'ODA/' + ISO3[select[j]] + suffix + ' - Value': select[j]}, inplace=True)
-
-    data.plot(figsize=(10, 10))
+    data.plot(figsize=(10, 10), linewidth=2)
     plt.xlabel('Years')
 
+
     if data_type == 'population':
-        plt.ylabel('Population in Millions')
+        plt.title('Population in Millions')
     elif data_type == 'gdp':
-        plt.ylabel('GDP in USD Billions')
+        plt.title('GDP in USD Billions')
     elif data_type == 'govspending':
-        plt.ylabel('Government Expenditure in USD Billions')
+        plt.title('Government Expenditure in USD Billions')
     elif data_type == 'debt':
-        plt.ylabel('Net Debt in USD Billions')
+        plt.title('Net Debt in USD Billions')
     elif data_type == 'unemployment':
-        plt.ylabel('Unemployment Rate in percentage')
+        plt.title('Unemployment Rate in percentage')
     elif data_type == 'import':
-        plt.ylabel('Percentage change in Imports')
+        plt.title('Percentage change in Imports')
     elif data_type == 'export':
-        plt.ylabel('Percentage change in Exports')
+        plt.title('Percentage change in Exports')
+
+    plt.legend(fontsize='large')
 
 
-
-    if abs == True:
+    if abs:
 
         dir = os.environ["HOME"] + '/macrograph.png'
         plt.savefig(dir)
@@ -129,8 +134,9 @@ def MacroData(raw, data_type, abs):
 
                 data_relative[select[k]] = res
             data_relative.plot(figsize=(10, 10))
-            plt.plot(data_relative)
+            plt.plot(data_relative, linewidth=2, ls='')
             plt.xlabel('Years')
+            plt.legend(fontsize='large')
 
         else:
             for k in range(len(select)):
@@ -140,24 +146,26 @@ def MacroData(raw, data_type, abs):
                     res.append(((data_relative[select[k]][l] / ind) - 1) * 100)
                 data_relative[select[k]] = res
             data_relative.plot(figsize=(10, 10))
-            plt.plot(data_relative)
+            plt.plot(data_relative, linewidth=2, ls='')
             plt.xlabel('Years')
+            plt.legend(fontsize='large')
 
 
         if data_type == 'population':
-            plt.ylabel('Percentage change in Population')
+            plt.title('Percentage change in Population')
         elif data_type == 'gdp':
-            plt.ylabel('Percentage change in GDP')
+            plt.title('Percentage change in GDP')
         elif data_type == 'govspending':
-            plt.ylabel('Percentage change in Government Expenditure')
+            plt.title('Percentage change in Government Expenditure')
         elif data_type == 'debt':
-            plt.ylabel('Percentage change in Net Debt')
+            plt.title('Percentage change in Net Debt')
         elif data_type == 'unemployment':
-            plt.ylabel('Percentage change in Unemployment Rate')
+            plt.title('Percentage change in Unemployment Rate')
         elif data_type == 'import':
-            plt.ylabel('Cumulative change in Import')
+            plt.title('Cumulative change in Import')
         elif data_type == 'export':
-            plt.ylabel('Cumulative change in Export')
+            plt.title('Cumulative change in Export')
+
 
         dir = os.environ["HOME"] + '/macrograph.png'
         plt.savefig(dir)
