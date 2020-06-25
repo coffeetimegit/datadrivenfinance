@@ -84,17 +84,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROABS()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -108,17 +98,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROABS()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -132,17 +112,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROABS()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -156,17 +126,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROABS()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -180,17 +140,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROABS()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -204,17 +154,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROABS()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -228,17 +168,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROABS()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -252,17 +182,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROREL()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -276,17 +196,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROREL()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -300,17 +210,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROREL()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -324,17 +224,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROREL()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -348,17 +238,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROREL()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -372,17 +252,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROREL()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -396,17 +266,7 @@ class MacroDataFragment : Fragment() {
                 var macroCache = initMACROREL()
                 var macroCacheImg = macroCache?.get(0).toString()
                 var macroCacheError = macroCache?.get(1).toString()
-
-                if (macroCacheImg.contains("error")) {
-                    Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                } else {
-                    val intent = Intent(view.context, Graph::class.java)
-                    intent.putExtra("res", macroCacheImg)
-                    startActivity(intent)
-                    if (macroCacheError.contains("Quandl API cannot load")) {
-                        Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
-                    }
-                }
+                outputHandling(macroCacheImg, macroCacheError)
             }
         }
 
@@ -418,6 +278,7 @@ class MacroDataFragment : Fragment() {
 
 
     }
+
 
     private fun initMACROABS(): MutableList<PyObject>? {
         var abs = true
@@ -434,6 +295,20 @@ class MacroDataFragment : Fragment() {
         return pythonFile.callAttr("MacroData", countries.text.toString(),
             dataType, abs).asList()
     }
+
+    private fun outputHandling(macroCacheImg: String, macroCacheError: String) {
+        if (macroCacheImg.contains("error")) {
+            Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
+        } else {
+            val intent = Intent(view!!.context, Graph::class.java)
+            intent.putExtra("res", macroCacheImg)
+            startActivity(intent)
+            if (macroCacheError.contains("Quandl API cannot load")) {
+                Toast.makeText(activity, macroCacheError, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
