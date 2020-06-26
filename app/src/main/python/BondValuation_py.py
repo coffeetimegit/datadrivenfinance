@@ -49,14 +49,12 @@ def FIV(product, bondDetails):
         CashFlowPV = [CashFlow[-1] / (1 + yld)]
         TimeWeightedCashFlowPV = [CashFlowPV[-1]]
 
-
         for cnt in range(pymt - 1):
 
             CashFlow.append(face * cpn)
             CashFlowPV.append(CashFlow[-1] / (1 + yld) ** (cnt + 1))
             TimeWeightedCashFlowPV.append((cnt + 1) * CashFlowPV[-1])
 
-        #Make sure to also create a condition if maturity within a year later
         CashFlow.append(face + (face * cpn))
         CashFlowPV.append(CashFlow[-1] / (1 + yld) ** (pymt))
         TimeWeightedCashFlowPV.append((pymt) * CashFlowPV[-1])
@@ -67,8 +65,14 @@ def FIV(product, bondDetails):
     coupon_frequency = 1
     yield_change = 0.01
 
-    MacD = MacaulayDuration(face, cpn, yld, payment)
-    ModD = MacD / (1 + (yld / coupon_frequency)) * yield_change
+
+    if payment <= 1:
+        error_msg = 'Error: Sorry unable to perform valuation on JGB maturing within 1 year.'
+        return ['error', error_msg]
+
+    else:
+        MacD = MacaulayDuration(face, cpn, yld, payment)
+        ModD = MacD / (1 + (yld / coupon_frequency)) * yield_change
 
 
     yld_perm = []
@@ -187,10 +191,12 @@ def JGBISIN():
                 break
 
     except:
-        return ['error', None]
+        error_msg = 'Error: Internet connection failure.'
+        return ['error', error_msg]
 
     if not JGBs:
-        return ['error', None]
+        error_msg = 'Error: Unable to parse JGB ISINs data from Solactive. Please contact the creator for its resolution.'
+        return ['error', error_msg]
 
 
     JGBList = list(JGBs.keys())

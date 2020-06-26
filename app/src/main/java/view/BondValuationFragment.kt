@@ -52,10 +52,10 @@ class BondValuationFragment : Fragment() {
         if (isins.isEmpty()) {
             var bondList = initBondList()
             var bondSelect = bondList?.get(0).toString()
+            bondDetails = bondList?.get(1).toString()
 
             if (bondSelect == "error") {
-                val errorMsg = "Error parsing JGB ISINs data from Solactive. Please contact the creator for its resolution."
-                Toast.makeText(activity, errorMsg, Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, bondDetails, Toast.LENGTH_LONG).show()
             } else {
                 var product = ""
                 isins.add("Select JGB")
@@ -72,7 +72,6 @@ class BondValuationFragment : Fragment() {
                 }
                 isins.add(product)
             }
-            bondDetails = bondList?.get(1).toString()
         }
 
         option.adapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_list_item_1, isins.toList())
