@@ -115,7 +115,7 @@ def MPT(stocks, simulation):
     pvols = []
 
 
-    for p in range(simulation):
+    for _ in range(simulation):
         weights = np.random.random(noa)
         weights /= np.sum(weights)
         prets.append(Return(weights))
