@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
-        app:cardBackgroundColor="#AE4CAF50"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:cardElevation="2dp">
 
         <RelativeLayout
@@ -23,6 +23,7 @@
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:paddingLeft="30dp"
                 app:srcCompat="@drawable/main_logo" />
 
             <TextView
@@ -33,7 +34,7 @@
                 android:layout_marginStart="17dp"
                 android:layout_toStartOf="@+id/imageView3"
                 android:text="Towards Data Science"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp" />
 
         </RelativeLayout>
@@ -59,7 +60,8 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp">
+            android:layout_marginTop="48dp"
+            android:background="@color/colorPrimary">
 
 
         </androidx.viewpager.widget.ViewPager>

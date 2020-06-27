@@ -21,6 +21,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="5dp"
             android:text="1. Initial Price of an underlying product:"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +34,7 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:hint="example 100"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/param1" />
@@ -44,6 +46,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:text="2. Strike Price:"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/initialPrice" />
@@ -55,6 +58,7 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:hint="example 120"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/param2" />
@@ -67,6 +71,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:text="3. Risk Free Interest Rate:"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/strikePrice" />
@@ -78,6 +83,7 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:hint="example 0.05 or 5%"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/param3" />
@@ -89,6 +95,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:text="4. Time Horizon in years:"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/riskFreeRate" />
@@ -100,6 +107,7 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:hint="example 2"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/param4" />
@@ -111,6 +119,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:text="5. Select Option Type:"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/timeHorizon" />
@@ -120,6 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/param5" />

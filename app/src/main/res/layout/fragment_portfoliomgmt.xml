@@ -33,6 +33,7 @@
                     android:id="@+id/mptRes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="19sp" />
 
             </LinearLayout>
@@ -51,12 +52,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary">
 
                 <Spinner
                     android:id="@+id/selectStockMpt"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -85,6 +88,7 @@
                     android:layout_height="36dp"
                     android:layout_marginTop="5dp"
                     android:text="Clear Result"
+                    android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintStart_toEndOf="@+id/selectStockMpt"
                     app:layout_constraintTop_toTopOf="parent" />
 
