@@ -1,30 +1,16 @@
-import requests
-from bs4 import BeautifulSoup
+from datetime import datetime, date
 import numpy as np
 from pylab import plt
-from datetime import datetime, date
 from PIL import Image
 import os
 
 
 
-def FIV(product, bondDetails):
+def FIV(product, coupon, maturity):
 
-    product_details = bondDetails[bondDetails.index(product) - 1: bondDetails.index(product) + 40]
+    cpn = round(float(coupon)/200, 7)
 
-    cpn_details = product_details[product_details.index('['):product_details.index(',')]
-    cpn = ''
-    for cpn_text in cpn_details:
-        if cpn_text != '[' and cpn_text != "'" and cpn_text != ",":
-            cpn += cpn_text
-    cpn = round(float(cpn)/200, 7)
-
-    mat_details = product_details[product_details.index(','):product_details.index(']')]
-    mat = ''
-    for mat_text in mat_details:
-        if mat_text != ' ' and mat_text != ',' and mat_text != "'" and mat_text != ']':
-            mat += mat_text
-    mat = datetime.strptime(mat, '%m/%d/%Y').date()
+    mat = datetime.strptime(maturity, '%m/%d/%Y').date()
     today = date.today()
 
     payment, remainder = divmod(int((mat - today).days / 365 * 2), 1)
@@ -167,39 +153,3 @@ def FIV(product, bondDetails):
 
     return [dir, product_fullname + cpn_msg + cpn_freg_msg +
             mat_msg + mac_duration_msg + mod_duration_msg + convexity_msg]
-
-
-
-
-def JGBISIN():
-
-    try:
-        r = requests.get('https://www.solactive.com/Indices/?indexmembers=DE000SLA6QX8')
-        soup = BeautifulSoup(r.text, 'html.parser')
-        data_table = soup.find('tbody')
-
-        JGBs = {}
-
-        for jgb in range(len(data_table) - 1):
-
-            try:
-                if 'YEAR ISSUE' in str(data_table.find_all(class_='name')[jgb].text.strip()):
-                    JGBs[data_table.find_all(class_='isin')[jgb].text.strip()] = [data_table.find_all('tr')[jgb].find_all(class_='shares')[0].text.strip(),
-                                                                                  data_table.find_all('tr')[jgb].find_all(class_='shares')[1].text.strip()]
-
-            except IndexError:
-                break
-
-    except:
-        error_msg = 'Error: Internet connection failure.'
-        return ['error', error_msg]
-
-    if not JGBs:
-        error_msg = 'Error: Unable to parse JGB ISINs data from Solactive. Please contact the creator for its resolution.'
-        return ['error', error_msg]
-
-
-    JGBList = list(JGBs.keys())
-    JGBList.sort()
-
-    return [JGBList, JGBs]

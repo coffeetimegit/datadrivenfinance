@@ -10,7 +10,10 @@ import android.widget.*
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
 import com.example.inprogress.R
+import com.example.inprogress.bondDetails
+import com.example.inprogress.isins
 import kotlinx.android.synthetic.main.fragment_bondvaluation.*
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -18,8 +21,6 @@ import kotlinx.android.synthetic.main.fragment_bondvaluation.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-var isins = mutableSetOf<String>()
-var bondDetails = String()
 
 
 /**
@@ -49,30 +50,6 @@ class BondValuationFragment : Fragment() {
         option = view!!.findViewById(R.id.selectBond)
         result = view!!.findViewById(R.id.bondRes)
 
-        if (isins.isEmpty()) {
-            var bondList = initBondList()
-            var bondSelect = bondList?.get(0).toString()
-            bondDetails = bondList?.get(1).toString()
-
-            if (bondSelect == "error") {
-                Toast.makeText(activity, bondDetails, Toast.LENGTH_LONG).show()
-            } else {
-                var product = ""
-                isins.add("Select JGB")
-                for (bond in bondSelect) {
-                    if (bond.toString() != "[" && bond.toString() != "]") {
-                        if (bond.toString() == " ") {
-                            isins.add(product)
-                            product = ""
-                        }
-                        if (bond.toString() != "'" && bond.toString() != "," && bond.toString() != " ") {
-                            product += bond
-                        }
-                    }
-                }
-                isins.add(product)
-            }
-        }
 
         option.adapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_list_item_1, isins.toList())
         option.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -100,7 +77,9 @@ class BondValuationFragment : Fragment() {
                     Toast.makeText(activity, "Error: Select a JGB from the dropdown!", Toast.LENGTH_SHORT).show()
                 } else {
 
-                    var bondCache = initFIV(bondDetails)
+                    var bondCache = initFIV(bondRes.text.toString(),
+                                                                  bondDetails.get(bondRes.text.toString())?.get(0),
+                                                                  bondDetails.get(bondRes.text.toString())?.get(1))
                     var bondCacheImg = bondCache?.get(0).toString()
                     var bondCacheTxt = bondCache?.get(1).toString()
 
@@ -122,17 +101,12 @@ class BondValuationFragment : Fragment() {
     }
 
 
-    private fun initFIV(bondDetails: String?): MutableList<PyObject>? {
+    private fun initFIV(isin: String?, coupon: String?, maturity: String?): MutableList<PyObject>? {
         val python = Python.getInstance()
         val pythonFile = python.getModule("BondValuation_py")
-        return pythonFile.callAttr("FIV", bondRes.text, bondDetails).asList()
+        return pythonFile.callAttr("FIV", isin, coupon, maturity).asList()
     }
 
-    private fun initBondList(): MutableList<PyObject>? {
-        val python = Python.getInstance()
-        val pythonFile = python.getModule("BondValuation_py")
-        return pythonFile.callAttr("JGBISIN").asList()
-    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
