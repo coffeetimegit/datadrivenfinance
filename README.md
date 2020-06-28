@@ -1,3 +1,3 @@
 # datadrivenfinance
 
-<img src="app/src/main/res/drawable/app_logo.png" width="300">
+<img src="app/src/main/res/drawable/main_logo.png">
