@@ -35,7 +35,7 @@
                     android:layout_alignParentStart="true"
                     android:paddingLeft="5dp"
                     android:src="@drawable/creator"
-                    app:civ_border_color="#FF000000"
+                    app:civ_border_color="@color/colorPrimaryDark"
                     app:civ_border_width="2dp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
