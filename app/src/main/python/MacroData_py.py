@@ -96,7 +96,7 @@ def MacroData(raw, data_type, abs):
     elif data_type == 'govspending':
         plt.title('Government Expenditure in USD Billions')
     elif data_type == 'debt':
-        plt.title('Net Debt in USD Billions')
+        plt.title('National Net Debt in USD Billions')
     elif data_type == 'unemployment':
         plt.title('Unemployment Rate in percentage')
     elif data_type == 'import':
