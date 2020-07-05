@@ -28,7 +28,7 @@ class MainAdapter(val homeFeed: HomeFeed): RecyclerView.Adapter<MainAdapter.View
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = homeFeed.News.get(position)
         holder.view.title.text = article.title.replace("\n", " ")
-        holder.view.description.text = article.description.replace("\n", " ")
+        holder.view.description.text = article.description.replace("\n", " ").replace("\t", " ")
         holder.view.publication_time.text = article.time.replace("\n", " ")
 
         holder.newsLink = article
