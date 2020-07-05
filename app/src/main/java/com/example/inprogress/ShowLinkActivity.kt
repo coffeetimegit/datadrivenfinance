@@ -16,6 +16,6 @@ class ShowLinkActivity : AppCompatActivity() {
         webViewId.settings.loadWithOverviewMode = true
         webViewId.settings.useWideViewPort = true
 
-        webViewId.loadUrl(news_link.toString())
+        webViewId.loadUrl(news_link)
     }
 }
