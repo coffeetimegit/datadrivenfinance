@@ -71,33 +71,37 @@ class ValuationsFragment : Fragment() {
             ) {}
         }
 
+            fun initOPV(): String{
 
-        fun initOPV(): String{
+                var callorput = option.getSelectedItem().toString()
+                val python = Python.getInstance()
+                val pythonFile = python.getModule("OptionValuation_py")
+                println(optionType)
 
-            var callorput = option.getSelectedItem().toString()
-            val python = Python.getInstance()
-            val pythonFile = python.getModule("OptionValuation_py")
-            println(optionType)
-
-            return pythonFile.callAttr("OPV",  initialPrice.text.toString(),
-                strikePrice.text.toString(),
-                riskFreeRate.text.toString(),
-                timeHorizon.text.toString(),
-                callorput).toString()
-        }
-
-        valuationBtn.setOnClickListener {
-            if (initialPrice.text.isNotEmpty() && strikePrice.text.isNotEmpty() &&
-                riskFreeRate.text.isNotEmpty() && timeHorizon.text.isNotEmpty()) {
-
-                val intent = Intent(view.context, ValuationsRes::class.java)
-                intent.putExtra("res", initOPV())
-                startActivity(intent)
-
-            } else {
-                Toast.makeText(activity, "Error: Missing at least 1 parameter!", Toast.LENGTH_LONG).show()
+                return pythonFile.callAttr("OPV",  initialPrice.text.toString(),
+                    strikePrice.text.toString(),
+                    riskFreeRate.text.toString(),
+                    timeHorizon.text.toString(),
+                    callorput).toString()
             }
-        }
+
+            valuationBtn.setOnClickListener {
+                if (initialPrice.text.isNotEmpty() && strikePrice.text.isNotEmpty() &&
+                    riskFreeRate.text.isNotEmpty() && timeHorizon.text.isNotEmpty()) {
+                        val intent = Intent(view.context, ValuationsRes::class.java)
+                        var valuation = initOPV()
+                        if (!valuation.contains("Error")) {
+                            println(intent)
+                            intent.putExtra("res", valuation)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(activity, valuation, Toast.LENGTH_LONG).show()
+                        }
+
+                    } else {
+                        Toast.makeText(activity, "Error: Missing at least 1 parameter!", Toast.LENGTH_LONG).show()
+                }
+            }
 
         }
 

@@ -21,18 +21,30 @@ def OPV(S0, K, r, T, option_type):
 
 
     def monte_carlo_brownian_motion(S0, K, r, T, option_type):
-        S0 = float(S0)
-        K = float(K)
-        if '%' in r:
-            r = float(r[:r.index('%')]) / 100
-        else:
-            r = float(r)
-        T = float(T)
-        print(type(option_type), option_type)
+        try:
+            S0 = float(S0)
+        except:
+            return 'Error: Initial Price needs to be a number!'
+        try:
+            K = float(K)
+        except:
+            return 'Error: Strike Price needs to be a number!'
+        try:
+            if '%' in r:
+                r = float(r[:r.index('%')]) / 100
+            else:
+                r = float(r)
+        except:
+            return 'Error: Risk Free Interest Rate needs to be a number!'
+        try:
+            T = float(T)
+        except:
+            return 'Error: Time Horizon needs to be a number!'
         if option_type == 'Call Option':
             option_type = 'Call'
         else:
             option_type = 'Put'
+
         dt = T / M
         S = np.zeros((M + 1, I))
         S[0] = S0
