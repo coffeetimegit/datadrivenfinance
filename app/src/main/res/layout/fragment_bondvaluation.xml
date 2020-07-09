@@ -1,4 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,12 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <ScrollView
             android:id="@+id/bondValResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:padding="5dp"
             app:layout_constraintBottom_toTopOf="@+id/bondVal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,10 +34,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="19sp" />
+                    android:textSize="19sp"/>
 
             </LinearLayout>
-
 
         </ScrollView>
 
@@ -56,21 +55,21 @@
 
                 <Spinner
                     android:id="@+id/selectBond"
-                    android:layout_width="195dp"
+                    android:layout_width="@+id/bondClear"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/bondClear"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <Button
                     android:id="@+id/bondClear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Clear Bond"
-                    app:layout_constraintStart_toEndOf="@+id/selectBond"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bondBtn"/>
 
                 <Button
                     android:id="@+id/bondBtn"
@@ -78,16 +77,12 @@
                     android:layout_height="wrap_content"
                     android:text="Simulate"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/bondClear"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </FrameLayout>

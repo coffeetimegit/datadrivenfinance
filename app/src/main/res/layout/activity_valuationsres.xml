@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="view.ValuationsRes"
-    android:background="@color/colorPrimary" >
-
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/androidImg"
@@ -17,7 +16,7 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/android_logo" />
+        app:srcCompat="@drawable/android_logo"/>
 
     <TextView
         android:id="@+id/valuationTitle"
@@ -29,8 +28,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/androidImg" />
-
+        app:layout_constraintTop_toBottomOf="@+id/androidImg"/>
 
     <TextView
         android:id="@+id/valuationOutput"
@@ -42,6 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/valuationTitle"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

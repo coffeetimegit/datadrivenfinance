@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,20 +13,19 @@
         android:layout_height="match_parent"
         android:layout_margin="5dp">
 
-
         <TextView
-            android:id="@+id/param1"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="5dp"
-            android:text="1. Initial Price of an underlying product:"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/param1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:text="1. Initial Price of an underlying product:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
             android:id="@+id/initialPrice"
@@ -37,7 +37,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param1" />
+            app:layout_constraintTop_toBottomOf="@id/param1"/>
 
         <TextView
             android:id="@+id/param2"
@@ -49,7 +49,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/initialPrice" />
+            app:layout_constraintTop_toBottomOf="@id/initialPrice"/>
 
         <EditText
             android:id="@+id/strikePrice"
@@ -61,8 +61,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param2" />
-
+            app:layout_constraintTop_toBottomOf="@id/param2"/>
 
         <TextView
             android:id="@+id/param3"
@@ -74,7 +73,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/strikePrice" />
+            app:layout_constraintTop_toBottomOf="@id/strikePrice"/>
 
         <EditText
             android:id="@+id/riskFreeRate"
@@ -86,7 +85,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param3" />
+            app:layout_constraintTop_toBottomOf="@id/param3"/>
 
         <TextView
             android:id="@+id/param4"
@@ -98,7 +97,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/riskFreeRate" />
+            app:layout_constraintTop_toBottomOf="@id/riskFreeRate"/>
 
         <EditText
             android:id="@+id/timeHorizon"
@@ -122,7 +121,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/timeHorizon" />
+            app:layout_constraintTop_toBottomOf="@id/timeHorizon"/>
 
         <Spinner
             android:id="@+id/optionType"
@@ -132,7 +131,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param5" />
+            app:layout_constraintTop_toBottomOf="@id/param5"/>
 
         <Button
             android:id="@+id/valuationBtn"
@@ -142,8 +141,7 @@
             android:text="Generate Valuation Result"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/optionType" />
-
+            app:layout_constraintTop_toBottomOf="@+id/optionType"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

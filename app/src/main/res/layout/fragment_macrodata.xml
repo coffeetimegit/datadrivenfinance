@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +13,6 @@
         android:id="@+id/macroInputs"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <ScrollView
             android:id="@+id/macroScroll"
@@ -35,14 +35,15 @@
 
                     <ImageView
                         android:id="@+id/populationImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:padding="10dp"
                         android:src="@drawable/population_logo"
+                        app:layout_constraintEnd_toStartOf="@+id/populationTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/populationTitle"
@@ -53,8 +54,8 @@
                         android:text="Population:"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="19sp"
-                        app:layout_constraintStart_toEndOf="@+id/populationImg"
-                        app:layout_constraintTop_toTopOf="@+id/populationImg" />
+                        app:layout_constraintStart_toStartOf="@+id/populationAbsBtn"
+                        app:layout_constraintTop_toTopOf="@+id/populationImg"/>
 
                     <Button
                         android:id="@+id/populationAbsBtn"
@@ -64,29 +65,31 @@
                         android:text="Absolute scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/populationImg"
-                        app:layout_constraintStart_toStartOf="@+id/populationTitle" />
+                        app:layout_constraintEnd_toStartOf="@+id/populationRelBtn"
+                        tools:layout_editor_absoluteX="90dp"/>
 
                     <Button
                         android:id="@+id/populationRelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginBottom="2dp"
                         android:text="Relative scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/populationImg"
-                        app:layout_constraintStart_toEndOf="@+id/populationAbsBtn" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <ImageView
                         android:id="@+id/gdpImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:padding="10dp"
                         android:src="@drawable/gdp_logo"
+                        app:layout_constraintEnd_toStartOf="@+id/populationTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/populationImg" />
+                        app:layout_constraintTop_toBottomOf="@+id/populationImg"/>
 
                     <TextView
                         android:id="@+id/gdpTitle"
@@ -97,8 +100,8 @@
                         android:text="National GDP:"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="19sp"
-                        app:layout_constraintStart_toEndOf="@+id/gdpImg"
-                        app:layout_constraintTop_toTopOf="@+id/gdpImg" />
+                        app:layout_constraintStart_toStartOf="@+id/gdpAbsBtn"
+                        app:layout_constraintTop_toTopOf="@+id/gdpImg"/>
 
                     <Button
                         android:id="@+id/gdpAbsBtn"
@@ -108,29 +111,30 @@
                         android:text="Absolute scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/gdpImg"
-                        app:layout_constraintStart_toStartOf="@+id/gdpTitle" />
+                        app:layout_constraintEnd_toStartOf="@+id/gdpRelBtn"/>
 
                     <Button
                         android:id="@+id/gdpRelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginBottom="2dp"
                         android:text="Relative scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/gdpImg"
-                        app:layout_constraintStart_toEndOf="@+id/gdpAbsBtn" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <ImageView
                         android:id="@+id/govSpendingImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:padding="10dp"
                         android:src="@drawable/govspending_logo"
+                        app:layout_constraintEnd_toStartOf="@+id/govSpendingTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/gdpImg" />
+                        app:layout_constraintTop_toBottomOf="@+id/gdpImg"/>
 
                     <TextView
                         android:id="@+id/govSpendingTitle"
@@ -141,8 +145,8 @@
                         android:text="Government Expenditure:"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="19sp"
-                        app:layout_constraintStart_toEndOf="@+id/govSpendingImg"
-                        app:layout_constraintTop_toTopOf="@+id/govSpendingImg" />
+                        app:layout_constraintStart_toStartOf="@+id/govSpendingAbsBtn"
+                        app:layout_constraintTop_toTopOf="@+id/govSpendingImg"/>
 
                     <Button
                         android:id="@+id/govSpendingAbsBtn"
@@ -152,29 +156,30 @@
                         android:text="Absolute scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/govSpendingImg"
-                        app:layout_constraintStart_toStartOf="@+id/govSpendingTitle" />
+                        app:layout_constraintEnd_toStartOf="@+id/govSpendingRelBtn"/>
 
                     <Button
                         android:id="@+id/govSpendingRelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginBottom="2dp"
                         android:text="Relative scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/govSpendingImg"
-                        app:layout_constraintStart_toEndOf="@+id/govSpendingAbsBtn" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <ImageView
                         android:id="@+id/debtImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:padding="10dp"
                         android:src="@drawable/debt_logo"
+                        app:layout_constraintEnd_toStartOf="@+id/debtTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/govSpendingImg" />
+                        app:layout_constraintTop_toBottomOf="@+id/govSpendingImg"/>
 
                     <TextView
                         android:id="@+id/debtTitle"
@@ -185,8 +190,8 @@
                         android:text="National Debt:"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="19sp"
-                        app:layout_constraintStart_toEndOf="@+id/debtImg"
-                        app:layout_constraintTop_toTopOf="@+id/debtImg" />
+                        app:layout_constraintStart_toStartOf="@+id/debtAbsBtn"
+                        app:layout_constraintTop_toTopOf="@+id/debtImg"/>
 
                     <Button
                         android:id="@+id/debtAbsBtn"
@@ -196,29 +201,30 @@
                         android:text="Absolute scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/debtImg"
-                        app:layout_constraintStart_toStartOf="@+id/debtTitle" />
+                        app:layout_constraintEnd_toStartOf="@+id/debtRelBtn"/>
 
                     <Button
                         android:id="@+id/debtRelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginBottom="2dp"
                         android:text="Relative scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/debtImg"
-                        app:layout_constraintStart_toEndOf="@+id/debtAbsBtn" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <ImageView
                         android:id="@+id/unemploymentImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:padding="10dp"
                         android:src="@drawable/unemployment_logo"
+                        app:layout_constraintEnd_toStartOf="@+id/unemploymentTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/debtImg" />
+                        app:layout_constraintTop_toBottomOf="@+id/debtImg"/>
 
                     <TextView
                         android:id="@+id/unemploymentTitle"
@@ -229,8 +235,8 @@
                         android:text="Unemployment Rate:"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="19sp"
-                        app:layout_constraintStart_toEndOf="@+id/unemploymentImg"
-                        app:layout_constraintTop_toTopOf="@+id/unemploymentImg" />
+                        app:layout_constraintStart_toStartOf="@+id/unemploymentAbsBtn"
+                        app:layout_constraintTop_toTopOf="@+id/unemploymentImg"/>
 
                     <Button
                         android:id="@+id/unemploymentAbsBtn"
@@ -240,29 +246,30 @@
                         android:text="Absolute scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/unemploymentImg"
-                        app:layout_constraintStart_toStartOf="@+id/unemploymentTitle" />
+                        app:layout_constraintEnd_toStartOf="@+id/unemploymentRelBtn"/>
 
                     <Button
                         android:id="@+id/unemploymentRelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginBottom="2dp"
                         android:text="Relative scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/unemploymentImg"
-                        app:layout_constraintStart_toEndOf="@+id/unemploymentAbsBtn" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <ImageView
                         android:id="@+id/importImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:padding="10dp"
                         android:src="@drawable/importexport_logo"
+                        app:layout_constraintEnd_toStartOf="@+id/importTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/unemploymentImg" />
+                        app:layout_constraintTop_toBottomOf="@+id/unemploymentImg"/>
 
                     <TextView
                         android:id="@+id/importTitle"
@@ -273,8 +280,8 @@
                         android:text="Import:"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="19sp"
-                        app:layout_constraintStart_toEndOf="@+id/importImg"
-                        app:layout_constraintTop_toTopOf="@+id/importImg" />
+                        app:layout_constraintStart_toStartOf="@+id/importAbsBtn"
+                        app:layout_constraintTop_toTopOf="@+id/importImg"/>
 
                     <Button
                         android:id="@+id/importAbsBtn"
@@ -284,29 +291,30 @@
                         android:text="Absolute scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/importImg"
-                        app:layout_constraintStart_toStartOf="@+id/importTitle" />
+                        app:layout_constraintEnd_toStartOf="@+id/importRelBtn"/>
 
                     <Button
                         android:id="@+id/importRelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginBottom="2dp"
                         android:text="Relative scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/importImg"
-                        app:layout_constraintStart_toEndOf="@+id/importAbsBtn" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <ImageView
                         android:id="@+id/exportImg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:padding="10dp"
                         android:src="@drawable/importexport_logo"
+                        app:layout_constraintEnd_toStartOf="@+id/exportTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/importImg" />
+                        app:layout_constraintTop_toBottomOf="@+id/importImg"/>
 
                     <TextView
                         android:id="@+id/exportTitle"
@@ -317,8 +325,8 @@
                         android:text="Export:"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="19sp"
-                        app:layout_constraintStart_toEndOf="@+id/exportImg"
-                        app:layout_constraintTop_toTopOf="@+id/exportImg" />
+                        app:layout_constraintStart_toStartOf="@+id/exportAbsBtn"
+                        app:layout_constraintTop_toTopOf="@+id/exportImg"/>
 
                     <Button
                         android:id="@+id/exportAbsBtn"
@@ -328,23 +336,22 @@
                         android:text="Absolute scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/exportImg"
-                        app:layout_constraintStart_toStartOf="@+id/exportTitle" />
+                        app:layout_constraintEnd_toStartOf="@+id/exportRelBtn"/>
 
                     <Button
                         android:id="@+id/exportRelBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginBottom="2dp"
                         android:text="Relative scale"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/exportImg"
-                        app:layout_constraintStart_toEndOf="@+id/exportAbsBtn" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
-
 
         </ScrollView>
 
@@ -367,34 +374,29 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
-
         <Spinner
             android:id="@+id/selectCountries"
-            android:layout_width="200dp"
+            android:layout_width="@+id/countryClear"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="21dp"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/countryClear"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
             android:id="@+id/countryClear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
             android:text="Clear Country List"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </FrameLayout>

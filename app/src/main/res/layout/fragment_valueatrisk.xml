@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,12 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <ScrollView
             android:id="@+id/varResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:padding="5dp"
             app:layout_constraintBottom_toTopOf="@+id/var"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,6 @@
 
             </LinearLayout>
 
-
         </ScrollView>
 
         <androidx.cardview.widget.CardView
@@ -58,21 +57,21 @@
 
                 <Spinner
                     android:id="@+id/selectStockVar"
-                    android:layout_width="185dp"
+                    android:layout_width="@+id/varClear"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintEnd_toStartOf="@+id/varClear"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <Button
                     android:id="@+id/varClear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Clear Stock"
-                    app:layout_constraintStart_toEndOf="@+id/selectStockVar"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toStartOf="@+id/varBtn"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <Button
                     android:id="@+id/varBtn"
@@ -80,16 +79,12 @@
                     android:layout_height="wrap_content"
                     android:text="Simulate"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/varClear"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </FrameLayout>

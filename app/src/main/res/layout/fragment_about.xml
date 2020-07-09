@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,196 +14,211 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/creatorBio"
+        <ScrollView
+            android:id="@+id/creator"
             android:layout_width="match_parent"
             android:layout_height="165dp"
-            app:layout_constraintBottom_toTopOf="@+id/appDesc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/creatorBio"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary">
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/appDesc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/creatorImg"
-                    android:layout_width="120dp"
-                    android:layout_height="165dp"
-                    android:layout_alignParentStart="true"
-                    android:paddingLeft="5dp"
-                    android:src="@drawable/creator"
-                    app:civ_border_color="@color/colorPrimaryDark"
-                    app:civ_border_width="2dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/creatorImg"
+                        android:layout_width="120dp"
+                        android:layout_height="165dp"
+                        android:layout_alignParentStart="true"
+                        android:paddingLeft="5dp"
+                        android:src="@drawable/creator"
+                        app:civ_border_color="@color/colorPrimaryDark"
+                        app:civ_border_width="2dp"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@+id/creatorImg"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/creatorDesc1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:text="Creator Biography"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/textView"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/creatorDesc1"
+                            android:layout_marginTop="5dp"
+                            android:text="Name: Yutaka Obi\nEducation: University of Wisconsin-Madison, Bachelor of Science in Economics.\nPassionate about Finance and Data Science."
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/creatorDesc1"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/about"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/creator">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/appDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/creator">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:paddingHorizontal="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="About Data Driven Finance:\nA Native-Android trading app that aims to provide insightful information about investment decisions using financial modellings and predictive analytics. The app is created with the following tech stack. Click on the images below for their brief details.\n"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/creatorBio"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/about">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/creatorImg"
-                    android:padding="5dp">
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary">
 
-                    <TextView
-                        android:id="@+id/creatorDesc1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:text="Creator Biography"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
+                    <ImageView
+                        android:id="@+id/kotlinLogo"
+                        android:layout_width="175dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="5dp"
+                        android:padding="7dp"
+                        android:src="@drawable/kotlin_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
-                        android:textStyle="bold"
+                    <ImageView
+                        android:id="@+id/pythonLogo"
+                        android:layout_width="175dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/python_logo"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/textView"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/kotlinLogo"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/creatorDesc1"
+                    <ImageView
+                        android:id="@+id/anacondaLogo"
+                        android:layout_width="175dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="Name: Yutaka Obi\nEducation: University of Wisconsin-Madison, Bachelor of Science in Economics.\nPassionate about Finance and Data Science."
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="17sp"
+                        android:padding="2dp"
+                        android:src="@drawable/anaconda_logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/kotlinLogo"/>
+
+                    <ImageView
+                        android:id="@+id/mysqlLogo"
+                        android:layout_width="175dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/mysql_logo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/anacondaLogo"
+                        app:layout_constraintTop_toBottomOf="@+id/pythonLogo"/>
+
+                    <ImageView
+                        android:id="@+id/iexLogo"
+                        android:layout_width="175dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="5dp"
+                        android:layout_marginBottom="25dp"
+                        android:src="@drawable/iex_logo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/anacondaLogo"/>
+
+                    <ImageView
+                        android:id="@+id/androidStudioLogo"
+                        android:layout_width="175dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:padding="5dp"
+                        android:src="@drawable/android_studio_logo"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/creatorDesc1" />
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/iexLogo"
+                        app:layout_constraintTop_toBottomOf="@+id/anacondaLogo"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-        </androidx.cardview.widget.CardView>
+        </ScrollView>
 
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/appDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/creatorBio">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="5dp"
-                android:background="@color/colorPrimary">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="About Data Driven Finance:\nA Native-Android trading app that aims to provide insightful information about investment decisions using financial modellings and predictive analytics. The app is created with the following tech stack. Click on the images below for their brief details.\n"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/creatorBio" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appDesc">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary">
-
-
-                <ImageView
-                    android:id="@+id/kotlinLogo"
-                    android:layout_width="185dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="5dp"
-                    android:padding="7dp"
-                    android:src="@drawable/kotlin_logo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/pythonLogo"
-                    android:layout_width="185dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="5dp"
-                    android:padding="-10dp"
-                    android:src="@drawable/python_logo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/kotlinLogo"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/chaquopyLogo"
-                    android:layout_width="185dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/chaquopy_logo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/kotlinLogo" />
-
-                <ImageView
-                    android:id="@+id/anacondaLogo"
-                    android:layout_width="185dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginEnd="5dp"
-                    android:padding="2dp"
-                    android:src="@drawable/anaconda_logo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/chaquopyLogo"
-                    app:layout_constraintTop_toBottomOf="@+id/pythonLogo" />
-
-                <ImageView
-                    android:id="@+id/iexLogo"
-                    android:layout_width="185dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:padding="5dp"
-                    android:layout_marginBottom="25dp"
-                    android:src="@drawable/iex_logo"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/chaquopyLogo" />
-
-                <ImageView
-                    android:id="@+id/androidStudioLogo"
-                    android:layout_width="185dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="5dp"
-                    android:padding="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:src="@drawable/android_studio_logo"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/iexLogo"
-                    app:layout_constraintTop_toBottomOf="@+id/anacondaLogo" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

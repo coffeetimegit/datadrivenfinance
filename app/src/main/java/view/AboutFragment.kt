@@ -42,13 +42,13 @@ class AboutFragment : Fragment() {
         python.setOnClickListener {
             Toast.makeText(activity, "Python: A dynamically typed programming language that is used for the application's backend.", Toast.LENGTH_LONG).show()
         }
-        val chaquopy = view.findViewById(R.id.chaquopyLogo) as ImageView
-        chaquopy.setOnClickListener {
-            Toast.makeText(activity, "Chaquopy: An Application Binary Interface (ABI) that intermixes Kotlin and Java with Python.", Toast.LENGTH_LONG).show()
-        }
         val anaconda = view.findViewById(R.id.anacondaLogo) as ImageView
         anaconda.setOnClickListener {
             Toast.makeText(activity, "Anaconda: An open-source distribution of the Python and R programming languages for scientific computing.", Toast.LENGTH_LONG).show()
+        }
+        val mysql = view.findViewById(R.id.mysqlLogo) as ImageView
+        mysql.setOnClickListener {
+            Toast.makeText(activity, "MySQL: An open-source relational database management system based on Structured Query Language (SQL).", Toast.LENGTH_LONG).show()
         }
         val iex = view.findViewById(R.id.iexLogo) as ImageView
         iex.setOnClickListener {
