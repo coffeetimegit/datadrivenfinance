@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         var volleyRequest: RequestQueue? = null
 
-        val url = "https://datadrivenfinance.herokuapp.com/"
+        val url = "https://prodfinance.herokuapp.com/"
 
         isins.add("Select JGB")
         fun getJsonArray(Url: String) {
