@@ -111,7 +111,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="About Data Driven Finance:\nA Native-Android trading app that aims to provide insightful information about investment decisions using financial modellings and predictive analytics. The app is created with the following tech stack. Click on the images below for their brief details.\n"
+                        android:text="About ProdFinance:\nA Native-Android trading app that aims to provide insightful information about investment decisions using financial modellings and predictive analytics. The app is created with the following tech stack. Click on the images below for their brief details.\n"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="17sp"
                         app:layout_constraintEnd_toEndOf="parent"

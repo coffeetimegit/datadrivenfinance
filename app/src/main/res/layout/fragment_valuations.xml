@@ -8,141 +8,148 @@
     tools:context="view.ValuationsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp">
 
-        <TextView
-        android:id="@+id/param1"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="5dp"
-        android:text="1. Initial Price of an underlying product:"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="19sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/initialPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="22dp"
-            android:ems="10"
-            android:hint="example 100"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param1"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
 
-        <TextView
-            android:id="@+id/param2"
+            <TextView
+            android:id="@+id/param1"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:text="2. Strike Price:"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="5dp"
+            android:text="1. Initial Price of an underlying product:"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/initialPrice"/>
-
-        <EditText
-            android:id="@+id/strikePrice"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="22dp"
-            android:ems="10"
-            android:hint="example 120"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param2"/>
-
-        <TextView
-            android:id="@+id/param3"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:text="3. Risk Free Interest Rate:"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/strikePrice"/>
-
-        <EditText
-            android:id="@+id/riskFreeRate"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="22dp"
-            android:ems="10"
-            android:hint="example 0.05 or 5%"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param3"/>
-
-        <TextView
-            android:id="@+id/param4"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:text="4. Time Horizon in years:"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/riskFreeRate"/>
-
-        <EditText
-            android:id="@+id/timeHorizon"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="22dp"
-            android:ems="10"
-            android:hint="example 2"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param4" />
-
-        <TextView
-            android:id="@+id/param5"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:text="5. Select Option Type:"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/timeHorizon"/>
-
-        <Spinner
-            android:id="@+id/optionType"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/param5"/>
-
-        <Button
-            android:id="@+id/valuationBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Generate Valuation Result"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/optionType"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/initialPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="22dp"
+                android:ems="10"
+                android:hint="example 100"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/param1"/>
+
+            <TextView
+                android:id="@+id/param2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="2. Strike Price:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/initialPrice"/>
+
+            <EditText
+                android:id="@+id/strikePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="22dp"
+                android:ems="10"
+                android:hint="example 120"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/param2"/>
+
+            <TextView
+                android:id="@+id/param3"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="3. Risk Free Interest Rate:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/strikePrice"/>
+
+            <EditText
+                android:id="@+id/riskFreeRate"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="22dp"
+                android:ems="10"
+                android:hint="example 0.05 or 5%"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/param3"/>
+
+            <TextView
+                android:id="@+id/param4"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="4. Time Horizon in years:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/riskFreeRate"/>
+
+            <EditText
+                android:id="@+id/timeHorizon"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="22dp"
+                android:ems="10"
+                android:hint="example 2"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/param4" />
+
+            <TextView
+                android:id="@+id/param5"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="5. Select Option Type:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timeHorizon"/>
+
+            <Spinner
+                android:id="@+id/optionType"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="19sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/param5"/>
+
+            <Button
+                android:id="@+id/valuationBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Generate Valuation Result"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/optionType"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </FrameLayout>
