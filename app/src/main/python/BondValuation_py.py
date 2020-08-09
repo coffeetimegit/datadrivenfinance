@@ -98,46 +98,49 @@ def FIV(product, coupon, maturity):
 
 
     if product[:5] == 'JP102':
-        product_name = 'JN' + str(int(product[5:8]))
-        product_fullname = '- Product Name:\n  2 Year Japanese Govt Bond (' + product_name + ').\n\n'
+        product_name = 'JN{}'.format(str(int(product[5:8])))
+        product_fullname = '- Product Name:\n  2 Year Japanese Govt Bond ({}).\n\n'.format(product_name)
     elif product[:5] == 'JP105':
-        product_name = 'JS' + str(int(product[5:8]))
-        product_fullname = '- Product Name:\n  5 Year Japanese Govt Bond (' + product_name + ').\n\n'
+        product_name = 'JS{}'.format(str(int(product[5:8])))
+        product_fullname = '- Product Name:\n  5 Year Japanese Govt Bond ({}).\n\n'.format(product_name)
     elif product[:5] == 'JP110':
-        product_name = 'JB' + str(int(product[5:8]))
-        product_fullname = '- Product Name:\n  10 Year Japanese Govt Bond (' + product_name + ').\n\n'
+        product_name = 'JB{}'.format(str(int(product[5:8])))
+        product_fullname = '- Product Name:\n  10 Year Japanese Govt Bond ({}).\n\n'.format(product_name)
     elif product[:5] == 'JP120':
-        product_name = 'JL' + str(int(product[5:8]))
-        product_fullname = '- Product Name:\n  20 Year Japanese Govt Bond (' + product_name + ').\n\n'
+        product_name = 'JL{}'.format(str(int(product[5:8])))
+        product_fullname = '- Product Name:\n  20 Year Japanese Govt Bond ({}).\n\n'.format(product_name)
     elif product[:5] == 'JP130':
-        product_name = 'JX' + str(int(product[5:8]))
-        product_fullname = '- Product Name:\n  30 Year Japanese Govt Bond (' + product_name + ').\n\n'
+        product_name = 'JX{}'.format(str(int(product[5:8])))
+        product_fullname = '- Product Name:\n  30 Year Japanese Govt Bond ({}).\n\n'.format(product_name)
     elif product[:5] == 'JP140':
-        product_name = 'JU' + str(int(product[5:8]))
-        product_fullname = '- Product Name:\n  40 Year Japanese Govt Bond (' + product_name + ').\n\n'
+        product_name = 'JU{}'.format(str(int(product[5:8])))
+        product_fullname = '- Product Name:\n  40 Year Japanese Govt Bond ({}).\n\n'.format(product_name)
     else:
-        product_name = 'JBI' + str(int(product[5:8]))
-        product_fullname = 'CPI Linked Japanese Govt Bond (' + product_name + ').\n\n'
+        product_name = 'JBI{}'.fomrat(str(int(product[5:8])))
+        product_fullname = '- Product Name:\n  CPI Linked Japanese Govt Bond ({}).\n\n'.format(product_name)
 
 
-    cpn_msg = '- Coupon Rate:\n  ' + str(format(cpn/2, '.2%')) + ' per year.\n\n'
+    cpn_msg = '- Coupon Rate:\n  {} per year.\n\n'.format(str(format(cpn/2, '.2%')))
     cpn_freg_msg = '- Coupon Payment Frequency:\n  2 times per year.\n\n'
-    mat_msg = '- Maturity Date:\n  ' + str(mat) + '.\n\n'
-    mac_duration_msg = '- Macaulay Duration:\n  ' + str(round(MacD/2, 2)) + ' years' + '.\n\n'
-    mod_duration_msg = '- Modified Duration:\n  JPY ' + str(round(ModD, 5)) + ' for 1bp change in yield.\n\n'
-    convexity_msg = '- Convexity Adjustment:\n  ' + str(format(Convexity(increase, decrease, duration_price, yld_delta) / 100, '.5%')) + ' for 1.00% change in yield.\n\n'
+    mat_msg = '- Maturity Date:\n  {}.\n\n'.format(str(mat))
+    mac_duration_msg = '- Macaulay Duration:\n  {} years.\n\n'\
+        .format(str(round(MacD/2, 2)))
+    mod_duration_msg = '- Modified Duration:\n  JPY {} for 1bp change in yield.\n\n'\
+        .format(str(round(ModD, 5)))
+    convexity_msg = '- Convexity Adjustment:\n  {} for 1.00% change in yield.\n\n'\
+        .format(str(format(Convexity(increase, decrease, duration_price, yld_delta) / 100, '.5%')))
 
 
     plt.figure(figsize=(10, 10))
     plt.plot(yld_perm_adjusted, duration_line, 'g', label='Duration', linewidth=2)
     plt.plot(yld_perm_adjusted, prices, 'c', label='Price-Yield Curve', linewidth=2)
     plt.plot(yld * 2, duration_price, 'y*', markersize=20)
-    plt.title('Bond Duration and Price-Yield Curve: ' + product)
+    plt.title('Bond Duration and Price-Yield Curve: {}'.format(product))
     plt.xlabel('Yield')
     plt.ylabel('Bond Price')
     plt.legend(fontsize='large')
 
-    dir = os.environ["HOME"] + '/bondgraph.png'
+    dir = '{}{}'.format(os.environ["HOME"], '/bondgraph.png')
     plt.savefig(dir)
 
     image = Image.open(dir)
@@ -151,5 +154,5 @@ def FIV(product, coupon, maturity):
 
     image.rotate(270).save(dir)
 
-    return [dir, product_fullname + cpn_msg + cpn_freg_msg +
-            mat_msg + mac_duration_msg + mod_duration_msg + convexity_msg]
+    return [dir, '{}{}{}{}{}{}{}'.format(product_fullname, cpn_msg, cpn_freg_msg,
+            mat_msg, mac_duration_msg, mod_duration_msg, convexity_msg)]

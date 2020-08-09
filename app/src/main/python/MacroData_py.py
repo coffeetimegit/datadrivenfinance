@@ -1,4 +1,3 @@
-import quandl
 import pandas as pd
 from pylab import plt
 from PIL import Image
@@ -7,7 +6,6 @@ from bs4 import BeautifulSoup
 import json
 from Static import ISO3
 import os
-
 
 
 def MacroData(raw, data_type, abs):
@@ -52,7 +50,8 @@ def MacroData(raw, data_type, abs):
         unfound = []
         for i in select:
             temp = {}
-            source = requests.get(url_prefix + ISO3[i] + suffix + url_suffix)
+            full_url = '{}{}{}{}'.format(url_prefix, ISO3[i], suffix, url_suffix)
+            source = requests.get(full_url)
             soup = BeautifulSoup(source.text, 'html.parser')
             data_raw = json.loads(str(soup))
             if 'quandl_error' in data_raw:
@@ -78,7 +77,7 @@ def MacroData(raw, data_type, abs):
             select.remove(na)
 
     if unfound:
-        message = 'Error: Quandl API cannot load ' + data_type + ' data for \n' + '\n'.join(unfound) + '.'
+        message = 'Error: Quandl API cannot load {} data for \n{}.'.format(data_type, '\n'.join(unfound))
     else:
         message = None
 
@@ -109,7 +108,7 @@ def MacroData(raw, data_type, abs):
 
     if abs:
 
-        dir = os.environ["HOME"] + '/macrograph.png'
+        dir = '{}{}'.format(os.environ["HOME"], '/macrograph.png')
         plt.savefig(dir)
 
         image = Image.open(dir)
@@ -167,7 +166,7 @@ def MacroData(raw, data_type, abs):
             plt.title('Cumulative change in Export')
 
 
-        dir = os.environ["HOME"] + '/macrograph.png'
+        dir = '{}{}'.format(os.environ["HOME"], '/macrograph.png')
         plt.savefig(dir)
 
         image = Image.open(dir)

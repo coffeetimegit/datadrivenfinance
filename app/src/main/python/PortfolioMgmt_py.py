@@ -10,7 +10,6 @@ from Static import SP500
 import os
 
 
-
 def MPT(stocks, simulation):
 
     select = []
@@ -46,7 +45,8 @@ def MPT(stocks, simulation):
     for product in products:
 
         try:
-            source = requests.get(url_prefix + product.lower() + url_suffix)
+            full_url = '{}{}{}'.format(url_prefix, product.lower(), url_suffix)
+            source = requests.get(full_url)
             soup = BeautifulSoup(source.text, 'html.parser')
             data = json.loads(str(soup))
 
@@ -65,19 +65,15 @@ def MPT(stocks, simulation):
                         start = list(temp_date)[0]
                 else:
                     start = list(temp_date)[0]
-
                 if end:
                     if list(temp_date)[-1] < end:
                         end = list(temp_date)[-1]
                 else:
                     end = list(temp_date)[-1]
-
                 if len(consolidated) == 0:
                     consolidated = pd.DataFrame({'Date': temp_date, product: temp_price})
-
                 else:
                     consolidated = pd.merge(consolidated, pd.DataFrame({'Date': temp_date, product: temp_price})).dropna()
-
 
         except:
             error_msg = 'Error: Internet connection failure.'
@@ -93,7 +89,7 @@ def MPT(stocks, simulation):
             select.remove(key_list[val_list.index(filter)])
             unfound_stock.append(key_list[val_list.index(filter)])
 
-        message = 'Error: IEX API cannot load price data for\n' + '\n'.join(unfound_stock) + '.'
+        message = 'Error: IEX API cannot load price data for\n{}.'.format('\n'.join(unfound_stock))
 
 
     if len(products) < 2:
@@ -133,27 +129,25 @@ def MPT(stocks, simulation):
 
     opts = sco.minimize(Minimum_Sharpe_Ratio, eweights, method='SLSQP', bounds=bnds, constraints=cons)
     MXS_Title = 'Maximum Sharpe Ratio details:'
-    MXS_SR = 'Sharpe Ratio: ' + str(format((Return(opts['x']) / Volatility(opts['x'])), '.3%'))
-    MXS_VOL = 'Volatility: ' + str(format(Volatility(opts['x']) / 100, '.3%'))
-    MXS_PR = 'Portfolio Return: ' + str(format(Return(opts['x']) / 100, '.3%'))
+    MXS_SR = 'Sharpe Ratio: {}'.format(str(format((Return(opts['x']) / Volatility(opts['x'])), '.3%')))
+    MXS_VOL = 'Volatility: {}'.format(str(format(Volatility(opts['x']) / 100, '.3%')))
+    MXS_PR = 'Portfolio Return: {}'.format(str(format(Return(opts['x']) / 100, '.3%')))
     MXS_Alloc_Title = 'Allocation details:'
     MXS_Alloc = []
 
     for allocation in range(len(opts['x'])):
-        MXS_Alloc.append('Allocate ' + str(format(opts['x'][allocation], '.3%')) +  ' to ' +
-                         str(select[allocation]))
+        MXS_Alloc.append('Allocate {} to {}'.format(str(format(opts['x'][allocation], '.3%')), str(select[allocation])))
 
     optv = sco.minimize(Volatility, eweights, method='SLSQP', bounds=bnds, constraints=cons)
     MXV_Title = ('Minimum Volatility details:')
-    MXV_VOL = 'Volatility: ' + str(format(Volatility(optv['x']) / 100, '.3%'))
-    MXV_SR = 'Sharpe Ratio: ' + str(format((Return(optv['x']) / Volatility(optv['x'])), '.3%'))
-    MXV_PR = 'Portfolio Return: ' + str(format(Return(optv['x']) / 100, '.3%'))
+    MXV_VOL = 'Volatility: {}'.format(str(format(Volatility(optv['x']) / 100, '.3%')))
+    MXV_SR = 'Sharpe Ratio: {}'.format(str(format((Return(optv['x']) / Volatility(optv['x'])), '.3%')))
+    MXV_PR = 'Portfolio Return: {}'.format(str(format(Return(optv['x']) / 100, '.3%')))
     MXV_Alloc_Title = ('Allocation details:')
     MXV_Alloc = []
 
     for allocation in range(len(optv['x'])):
-        MXV_Alloc.append('Allocate ' + str(format(optv['x'][allocation], '.3%')) + ' to ' +
-                         str(select[allocation]))
+        MXV_Alloc.append('Allocate {} to {}'.format(str(format(optv['x'][allocation], '.3%')), str(select[allocation])))
 
     cons = ({'type': 'eq', 'fun': lambda x: Return(x) - tret},
             {'type': 'eq', 'fun': lambda x: np.sum(x) - 1})
@@ -180,7 +174,7 @@ def MPT(stocks, simulation):
     plt.title('Portfolio Optimization')
 
 
-    dir = os.environ["HOME"] + '/mptgraph.png'
+    dir = '{}{}'.format(os.environ["HOME"], '/mptgraph.png')
     plt.savefig(dir)
 
     image = Image.open(dir)
@@ -194,9 +188,10 @@ def MPT(stocks, simulation):
 
     image.rotate(270).save(dir)
 
+    title = '{} simulations generated.\n\nInvestment Universe:\n{}\n\n'.format(str(format(simulation, ',')), str(select))
+    MXS_desc = '{}\n\n{}\n{}\n{}\n'.format(str(MXS_Title), str(MXS_SR), str(MXS_VOL), str(MXS_PR))
+    MXS_alloc = '{}\n{}\n\n'.format(str(MXS_Alloc_Title), str('\n'.join(MXS_Alloc)))
+    MXV_desc = '{}\n\n{}\n{}\n{}\n'.format(str(MXV_Title), str(MXV_VOL), str(MXV_SR), str(MXV_PR))
+    MXV_alloc = '{}\n{}'.format(str(MXV_Alloc_Title), str('\n'.join(MXV_Alloc)))
 
-    return [dir, str(format(simulation, ',')) + ' simulations generated.\n\n' + 'Investment Universe:\n' + str(select) + '\n' * 2 + \
-           str(MXS_Title) + '\n' * 2 + str(MXS_SR) + '\n' + str(MXS_VOL) + '\n' + \
-           str(MXS_PR) + '\n' + str(MXS_Alloc_Title) + '\n' + str('\n'.join(MXS_Alloc)) + '\n' * 2 + \
-           str(MXV_Title) + '\n' * 2 + str(MXV_VOL) + '\n' + str(MXV_SR) + '\n' + \
-           str(MXV_PR) + '\n' + str(MXV_Alloc_Title) + '\n' + str('\n'.join(MXV_Alloc)), message]
+    return [dir, '{}{}{}{}{}'.format(title, MXS_desc, MXS_alloc, MXV_desc, MXV_alloc), message]

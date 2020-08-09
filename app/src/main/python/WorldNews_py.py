@@ -7,12 +7,16 @@ from datetime import datetime
 def news():
 
     try:
-        r = requests.get('https://www.reuters.com/finance/markets')
+        url = 'https://www.reuters.com/finance/markets'
+        r = requests.get(url, timeout=10)
+        r.raise_for_status()
         soup = BeautifulSoup(r.text, 'html.parser')
-
+    except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
+        return 'Error: Internet connection failure.'
+    except requests.exceptions.HTTPError:
+        return 'Error: {}'.format(url) + '\ndoes not exist.'
     except:
-        error_msg = 'Error: Internet connection failure.'
-        return error_msg
+        return 'Error parsing Thomson Reuters news. Please contact the creator for its resolution.'
 
     cache = []
     res = []
@@ -21,24 +25,23 @@ def news():
 
     try:
         for region in range(3):
-
             if region == 0:
-                section_id = section + 'us'
+                section_id = '{}us'.format(section)
                 RegionNews = soup.find(id=section_id)
                 cache.append(news_all(RegionNews.find(class_='module-content')))
-
             elif region == 1:
-                section_id = section + 'emea'
+                section_id = '{}emea'.format(section)
                 RegionNews = soup.find(id=section_id)
                 cache.append(news_all(RegionNews.find(class_='module-content')))
-
             else:
-                section_id = section + 'asia'
+                section_id = '{}asia'.format(section)
                 RegionNews = soup.find(id=section_id)
                 cache.append(news_all(RegionNews.find(class_='module-content')))
 
-    except AttributeError:
-        return 'error'
+    except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
+        return 'Error: Internet connection failure.'
+    except:
+        return 'Error parsing Thomson Reuters news. Please contact the creator for its resolution.'
 
     for region in range(len(cache)):
         for single in range(len(cache[region])):
@@ -62,7 +65,6 @@ def news():
                 res_12pm.append(r)
             elif 'pm' in r['time']:
                 res_pm.append(r)
-
         else:
             res_date.append(r)
 

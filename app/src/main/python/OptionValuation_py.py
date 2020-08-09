@@ -57,18 +57,18 @@ def OPV(S0, K, r, T, option_type):
             hT = np.maximum(K - S[-1], 0)
         C0 = np.exp(-r * T) * np.mean(hT)
 
+        Title = 'Option Valuation with the following parameters:\n\n'
+        S0_desc = 'Initial Price: {}\n'.format(str(S0))
+        K_desc = 'Strike Price: {}\n'.format(str(K))
+        r_desc = 'Risk Free Interest Rate: {}\n'.format(str(format(r, '.2%')))
+        T_desc = 'Time Horizon: {} year\n'.format(str(T))
+        option_type_desc = 'Option Type: {} option \n\n'.format(option_type)
+        valuation_desc = 'Stochastic differential equation:\ndS(t) = rS(t)dt + σS(t)dZ(t)\n\n'
+        distribution_desc = 'Distribution method:\nStandard Normal Distribution\n\n'
+        valuation_res = '{} option value: {}'.format(option_type, str(C0.round(2)))
 
-        Title = 'Option Valuation with the following parameters:'
-
-
-        return Title + '\n'*2 + 'Initial Price: ' + str(S0) + '\n' +\
-               'Strike Price: ' + str(K) + '\n' +\
-               'Risk Free Interest Rate: ' + str(format(r, '.2%')) + '\n' +\
-               'Time Horizon: ' + str(T) + ' year\n' +\
-               'Option Type: ' + option_type + ' option' + '\n'*2 + \
-               'Stochastic differential equation:' + '\n' + 'dS(t) = rS(t)dt + σS(t)dZ(t)' + '\n'*2 +\
-               'Distribution method:' + '\n' + 'Standard Normal Distribution' + '\n'*2 + \
-               option_type + ' option value: ' + str(C0.round(2))
+        return '{}{}{}{}{}{}{}{}{}'.format(Title, S0_desc, K_desc, r_desc, T_desc, option_type_desc,
+                                           valuation_desc, distribution_desc, valuation_res)
 
 
     return monte_carlo_brownian_motion(S0, K, r, T, option_type)

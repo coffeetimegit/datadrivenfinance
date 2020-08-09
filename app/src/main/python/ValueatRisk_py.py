@@ -17,16 +17,20 @@ def VAR(select):
     try:
         url_prefix = 'https://sandbox.iexapis.com/stable/stock/'
         url_suffix = '/chart/max?token=Tsk_d536dffef19e4ae4941ea4ac530d6133'
-        source = requests.get(url_prefix + ticker.lower() + url_suffix)
+        full_url = '{}{}{}'.format(url_prefix, ticker.lower(), url_suffix)
+        source = requests.get(full_url, timeout=20)
         soup = BeautifulSoup(source.text, 'html.parser')
         data = json.loads(str(soup))
 
+    except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
+        return ['error', 'Error: Internet connection failure.']
+    except (ValueError, requests.exceptions.HTTPError):
+        return ['error', 'Error: {}{}'.format(full_url, '\ndoes not exist.')]
     except:
-        error_msg = 'Error: Internet connection failure.'
-        return ['error', error_msg]
+        return ['error', 'Error parsing IEX API. Please contact the creator for its resolution.']
 
     if not data:
-        error_msg = 'Error: IEX API cannot load price data for ' + select + '.'
+        error_msg = 'Error: IEX API cannot load price data for {}.'.format(select)
         return ['error', error_msg]
 
     temp_date = []
@@ -52,7 +56,6 @@ def VAR(select):
                          40: int((40/100)*len(percs)), 50: int((50/100)*len(percs))}
 
 
-
     risk = np.log(data[select] / data[select].shift(1))
 
     VaR = scs.scoreatpercentile(latest_price * risk, percs)
@@ -65,13 +68,12 @@ def VAR(select):
             bar.set_facecolor("tomato")
 
 
-    plt.title('Value at Risk Profile: ' + select)
+    plt.title('Value at Risk Profile: {}'.format(select))
     plt.xlabel('Return')
     plt.ylabel('Frequency')
 
 
-
-    dir = os.environ["HOME"] + '/vargraph.png'
+    dir = '{}{}'.format(os.environ["HOME"], '/vargraph.png')
     plt.savefig(dir)
 
 
@@ -87,14 +89,16 @@ def VAR(select):
     image.rotate(270).save(dir)
 
     result = str(format(simulation, ',')) + ' simulations generated.\n\n'
-    description = 'Value at Risk profile for ' + select + ' that is trading at ' + format(round(latest_price, 2), ',') + ' on ' + str(latest_date) + '.\n\n'
+    description = 'Value at Risk profile for {} that is trading at {} on {}.\n\n'\
+        .format(select, format(round(latest_price, 2)), str(latest_date))
 
     title = '%16s %16s' % ('Confidence Level', 'Loss Amount')
     line = 'ー' * 16
 
     res = []
     for k, v in percs_display.items():
-        res.append(' ' * 6 + format(100 - k, '.4f') + ' ' * 13 + '|' + ' ' * 7 + format(-VaR[v], ',.2f'))
+        res.append('{}{}{}|{}{}'.format(' ' * 6, format(100 - k, '.4f'),
+                                        ' ' * 13, ' ' * 7, format(-VaR[v], ',.2f')))
 
-    return [dir, result + description + title + '\n' + line + '\n' + '\n'.join(res)]
+    return [dir, '{}{} {}\n{}\n{}'.format(result, description, title, line, '\n'.join(res))]
 

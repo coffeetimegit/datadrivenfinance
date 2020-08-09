@@ -36,18 +36,13 @@ class NewsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         var raw = initNews()
-        if (raw == "error") {
-            var errorMsg = "Error parsing Thomson Reuters news. Please contact the creator for its resolution."
-            Toast.makeText(activity, errorMsg, Toast.LENGTH_LONG).show()
-        } else if (raw.contains("Error")) {
+        if (raw.contains("Error")) {
             Toast.makeText(activity, raw, Toast.LENGTH_LONG).show()
         } else {
             read_json(raw)
@@ -64,17 +59,13 @@ class NewsFragment : Fragment() {
     fun read_json(raw: String){
 
         try {
-
             val gson = GsonBuilder().create()
             val homeFeed = gson.fromJson(raw, HomeFeed::class.java)
-
             activity?.runOnUiThread {
                 view?.worldNews?.adapter = MainAdapter(homeFeed)
             }
 
-
-        } catch (e: IOException) {
-
+            } catch (e: IOException) {
         }
     }
 

@@ -17,18 +17,22 @@ def SMA(select):
     try:
         url_prefix = 'https://sandbox.iexapis.com/stable/stock/'
         url_suffix = '/chart/max?token=Tsk_d536dffef19e4ae4941ea4ac530d6133'
-        source = requests.get(url_prefix + ticker.lower() + url_suffix)
+        full_url = '{}{}{}'.format(url_prefix, ticker.lower(), url_suffix)
+        source = requests.get(full_url, timeout=20)
         soup = BeautifulSoup(source.text, 'html.parser')
         data = json.loads(str(soup))
-
+    except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
+        return ['error', 'Error: Internet connection failure.']
+    except (ValueError, requests.exceptions.HTTPError):
+        return ['error', 'Error: {}'.format(full_url) + '\ndoes not exist.']
     except:
-        error_msg = 'Error: Internet connection failure.'
-        return ['error', error_msg]
+        return ['error', 'Error parsing IEX API. Please contact the creator for its resolution.']
 
 
     if not data:
-        error_msg = 'Error: IEX API cannot load price data for ' + select + '.'
+        error_msg = 'Error: IEX API cannot load price data for {}.'.format(select)
         return ['error', error_msg]
+
 
     temp_date = []
     temp_price = []
@@ -66,12 +70,12 @@ def SMA(select):
     res = []
     for i in range(len(df)):
         if df['Position'][i] == 1:
-             res.append('Buy ' + ticker + ' on ' + str(df.index[i]) + ' Price at ' + str(format(df[select][i], ',')) + '\n')
+             res.append('Buy {} on {} Price at {}\n'.format(ticker, str(df.index[i]), str(format(df[select][i], ','))))
         else:
-            res.append('Sell ' + ticker + ' on ' + str(df.index[i]) + ' Price at ' + str(format(df[select][i], ',')) + '\n')
+            res.append('Sell {} on {} Price at {}\n'.format(ticker, str(df.index[i]), str(format(df[select][i], ','))))
 
 
-    dir = os.environ["HOME"] + '/smagraph.png'
+    dir = '{}{}'.format(os.environ["HOME"], '/smagraph.png')
     plt.savefig(dir)
 
     image = Image.open(dir)
@@ -86,5 +90,4 @@ def SMA(select):
     image.rotate(270).save(dir)
 
 
-    return [dir, 'Simple Moving Averages Trading Strategy for ' + str(select) + ' (Ticker: ' + ticker + ')' +\
-           '\n'*2 + str(''.join(res))]
+    return [dir, 'Simple Moving Averages Trading Strategy for {} (Ticker: {}).{}{}'.format(str(select), ticker, '\n'*2, str(''.join(res)))]
