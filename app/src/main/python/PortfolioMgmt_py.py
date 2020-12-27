@@ -6,6 +6,7 @@ from PIL import Image
 import requests
 from bs4 import BeautifulSoup
 import json
+import concurrent.futures
 from Static import SP500
 import os
 
@@ -37,57 +38,83 @@ def MPT(stocks, simulation):
     url_prefix = 'https://sandbox.iexapis.com/stable/stock/'
     url_suffix = '/chart/max?token=Tsk_d536dffef19e4ae4941ea4ac530d6133'
 
-    start = None
-    end = None
+
     consolidated = pd.DataFrame()
 
     unfound = []
-    for product in products:
 
-        try:
-            full_url = '{}{}{}'.format(url_prefix, product.lower(), url_suffix)
-            source = requests.get(full_url)
-            soup = BeautifulSoup(source.text, 'html.parser')
-            data = json.loads(str(soup))
+    check = products
+    key_list = list(SP500.keys())
+    val_list = list(SP500.values())
 
-            if not data:
-                unfound.append(product)
-                continue
+    def serialize(url, attempt):
+        if attempt > 10:
+            position = val_list.index(url)
+            unfound.append(key_list[position])
+            check.remove(url)
+            return None
+        else:
+            try:
+                attempt += 1
+                full_url = '{}{}{}'.format(url_prefix, url.lower(), url_suffix)
+                source = requests.get(full_url)
+                soup = BeautifulSoup(source.text, 'html.parser')
+                data = json.loads(str(soup))
+                consolidated = pd.DataFrame(data, columns=['date', 'close'])
+                consolidated.rename(columns={'date': 'Date', 'close': url}, inplace=True)
+                consolidated = consolidated.set_index('Date')
+                return consolidated
+
+            except (ValueError, requests.exceptions.HTTPError, json.JSONDecodeError):
+                serialize(url, attempt)
+
+            except:
+                return 'error'
+
+
+    result = []
+    iterator = [1] * len(check)
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        while check:
+            if not temp:
+                temp = list(executor.map(serialize, check, iterator))
+
             else:
-                temp_date = []
-                temp_price = []
-                for item in data:
-                    temp_date.append(item['date'])
-                    temp_price.append(item['close'])
+                temp = list(executor.map(serialize, check, iterator))
 
-                if start:
-                    if list(temp_date)[0] > start:
-                        start = list(temp_date)[0]
-                else:
-                    start = list(temp_date)[0]
-                if end:
-                    if list(temp_date)[-1] < end:
-                        end = list(temp_date)[-1]
-                else:
-                    end = list(temp_date)[-1]
-                if len(consolidated) == 0:
-                    consolidated = pd.DataFrame({'Date': temp_date, product: temp_price})
-                else:
-                    consolidated = pd.merge(consolidated, pd.DataFrame({'Date': temp_date, product: temp_price})).dropna()
+            try:
+                if temp[0] == 'error':
+                    error_msg = 'Error: Internet connection failure.'
+                    return ['error', stocks, error_msg]
+            except:
+                pass
 
-        except:
-            error_msg = 'Error: Internet connection failure.'
-            return ['error', stocks, error_msg]
+            temp = [t for t in temp if t is not None]
+            result += temp
+            result = [res for res in result if res is not None]
+
+            for i in temp:
+                check.remove(i.columns[-1])
+
+
+    for i in result:
+        if len(consolidated) == 0:
+            consolidated = i
+        else:
+            consolidated = pd.merge(consolidated, i, on="Date")
+
+    select = [sel for sel in select if sel not in unfound]
+
+    products = []
+    for col in consolidated.columns:
+        products.append(col)
 
 
     if unfound:
-        key_list = list(SP500.keys())
-        val_list = list(SP500.values())
         unfound_stock = []
         for filter in unfound:
-            products.remove(filter)
-            select.remove(key_list[val_list.index(filter)])
-            unfound_stock.append(key_list[val_list.index(filter)])
+            unfound_stock.append(filter)
 
         message = 'Error: IEX API cannot load price data for\n{}.'.format('\n'.join(unfound_stock))
 
@@ -98,7 +125,6 @@ def MPT(stocks, simulation):
 
     noa = len(products)
     consolidated = consolidated[products]
-    consolidated = consolidated.dropna()
     rets = np.log(consolidated / consolidated.shift(1))
 
     def Return(weights):
