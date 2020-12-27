@@ -33,12 +33,9 @@ def VAR(select):
         error_msg = 'Error: IEX API cannot load price data for {}.'.format(select)
         return ['error', error_msg]
 
-    temp_date = []
-    temp_price = []
-    for item in data:
-        temp_date.append(item['date'])
-        temp_price.append(item['close'])
-    data = pd.DataFrame({'Date': temp_date, select: temp_price})
+
+    data = pd.DataFrame(data, columns=['date', 'close'])
+    data.rename(columns={'date': 'Date', 'close': select}, inplace=True)
 
 
     plt.figure(figsize=(10, 10))
@@ -49,6 +46,7 @@ def VAR(select):
     simulation = 10000
 
     percs = np.linspace(0, 100, num=simulation)
+
     percs_display =     {0.01: int((0.01/100)*len(percs)), 0.1: int((0.1/100)*len(percs)),
                          1: int((1/100)*len(percs)), 2.5: int((2.5/100)*len(percs)),
                          5: int((5/100)*len(percs)), 10: int((10/100)*len(percs)),
@@ -101,4 +99,3 @@ def VAR(select):
                                         ' ' * 13, ' ' * 7, format(-VaR[v], ',.2f')))
 
     return [dir, '{}{} {}\n{}\n{}'.format(result, description, title, line, '\n'.join(res))]
-
