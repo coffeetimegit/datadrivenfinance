@@ -34,17 +34,13 @@ def SMA(select):
         return ['error', error_msg]
 
 
-    temp_date = []
-    temp_price = []
-    for item in data:
-        temp_date.append(item['date'])
-        temp_price.append(item['close'])
-    data = pd.DataFrame({'Date': temp_date, select: temp_price})
+    data = pd.DataFrame(data, columns=['date', 'close'])
+    data.rename(columns={'date': 'Date', 'close': select}, inplace=True)
     data = data.set_index('Date')
 
 
-    SMAs_Short = 12
-    SMAs_Long = 52
+    SMAs_Short = 50
+    SMAs_Long = 250
 
     df = Figure()
     df = data
